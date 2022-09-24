@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+	<style type="text/css">
+		td {font-weight: bold; font-size: 15px;}
+	</style>
+</head>
+<body>
+    <div style="text-align: center;">
+    <h1 style="text-align: center;">HDH Project - 정책자금관리</h1>
+    	<h2><a href="/admin">관리자 페이지로</a></h2>
+    </div>
+    <div>
+    	<h3>정책자금관리 목록</h3>
+    	<form id="policyFundForm">
+	   		<table border="1" style="text-align: center;">
+	   			<thead>
+	   				<tr>
+	   					<td>정책자금명</td>
+	   					<td>산업분류코드</td>
+	   					<td>업력</td>
+	   					<td>기업부설연구소/전담부서</td>
+	   					<td>벤처인증</td>
+	   					<td>이노비즈인증</td>
+	   					<td>메인비즈인증</td>
+	   					<td>3년이내특허</td>
+	   					<td>소재부품인증</td>
+	   					<td>가족친화인증</td>
+	   					<td>뿌리기업인증</td>
+	   					<td>iso9001</td>
+	   					<td>상시근로자5인 이상/이하</td>
+	   					<td>공장유무</td>
+	   				</tr>
+	   			</thead>
+	   			<tbody>
+	   				<th:block th:each="list : ${List}">
+						<tr>
+		 					<td><span th:text="${list.policyFundName}"></span></td>
+		   					<td><span th:text="${list.industrialClassificationCode}"></span></td>
+		   					<td><span th:text="${list.BusinessAbility}"></span></td>
+		   					<td><span th:text="${list.InstituteCorporateSubsidiaryYn}"></span></td>
+		   					<td><span th:text="${list.VentureCertificationYn}"></span></td>
+		   					<td><span th:text="${list.InobizYn}"></span></td>
+		   					<td><span th:text="${list.MainBizYn}"></span></td>
+		   					<td><span th:text="${list.PatentCaseThreeYearsYn}"></span></td>
+		   					<td><span th:text="${list.MaterialPartCertificationYn}"></span></td>
+		   					<td><span th:text="${list.FamilyFriendlyCertificationYn}"></span></td>
+		   					<td><span th:text="${list.RootCompanyCertificationYn}"></span></td>
+		   					<td><span th:text="${list.IsoCertificationYn}"></span></td>
+		   					<td><span th:text="${list.RegularWorkerFiveYn}"></span></td>
+		   					<td><span th:text="${list.FactoryYn}"></span></td>
+		   				</tr>
+	   				</th:block>
+		 				<tr>
+		 					<td><input type="text" name="policyFundName" id="policyFundName"></td>
+		   					<td>
+			   					<select name="industrialClassificationCode">
+			   						<option value="C">C</option>
+			   						<option value="C외">C외</option>
+			   					</select>
+		   					</td>
+		   					<td>
+		   						<select name="BusinessAbility">
+			   						<option value="제약없음">제약없음</option>
+			   						<option value="7년미만">7년미만</option>
+			   						<option value="5년미만">5년미만</option>
+			   						<option value="3년미만">3년미만</option>
+			   					</select>
+		   					</td>
+		   					<td><input type="checkbox" name="InstituteCorporateSubsidiaryYn" value="Y"></td>
+		   					<td><input type="checkbox" name="VentureCertificationYn" value="Y"></td>
+		   					<td><input type="checkbox" name="InobizYn" value="Y"></td>
+		   					<td><input type="checkbox" name="MainBizYn" value="Y"></td>
+		   					<td><input type="checkbox" name="PatentCaseThreeYearsYn" value="Y"></td>
+		   					<td><input type="checkbox" name="MaterialPartCertificationYn" value="Y"></td>
+		   					<td><input type="checkbox" name="FamilyFriendlyCertificationYn" value="Y"></td>
+		   					<td><input type="checkbox" name="RootCompanyCertificationYn" value="Y"></td>
+		   					<td><input type="checkbox" name="IsoCertificationYn" value="Y"></td>
+		   					<td><input type="checkbox" name="RegularWorkerFiveYn" value="Y"></td>
+		   					<td><input type="checkbox" name="FactoryYn" value="Y"></td>
+		   				</tr>
+	   			</tbody>
+	   		</table>
+	   	</form>
+   		<button onclick="submit();">저장하기</button>
+    </div>
+
+    <script type="text/javascript">
+		function submit(){
+
+			if(document.getElementById("policyFundName").value == "" || document.getElementById("policyFundName").value == null || document.getElementById("policyFundName").value == 'undefined') {
+				alert('정책자금명을 입력해주세요');
+				return false;
+			}
+
+			var yn = confirm("정책자금을 저장하시겠습니까?");
+
+			if (yn) {
+				$.ajax({
+
+					url: "/insertPolicyFund.do",
+					data: $("#policyFundForm").serialize(),
+					type: "POST",
+					success: function() {
+
+						alert('완료');
+
+						location.reload();
+					},
+					error: function() {
+						alert('에러');
+					}
+				});
+			}
+		}
+    </script>
+</body>
+</html>

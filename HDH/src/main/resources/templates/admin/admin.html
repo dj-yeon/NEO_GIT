@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+
+	<style type="text/css">
+		.item {
+			border: solid 1px;
+			text-align: center;
+			padding: 100px;
+		}
+	</style>
+
+</head>
+<body>
+    <div style="text-align: center;">
+    	<h1>HDH Project - Admin</h1>
+    	<a href="/main">메인으로</a><br>
+    </div>
+	<div style="display: grid; border: solid 1px; grid-template-columns: 1fr 1fr 1fr 1fr;">
+		<div class="item"><a href="/user">회원관리</a></div>
+		<div class="item"><a href="#">기업관리</a></div>
+		<div class="item"><a href="/corporateManagement">기업경영분석(엑셀 업로드)</a></div>
+		<div class="item"><a href="#">정책자금관리</a></div>
+	</div>
+    <script type="text/javascript">
+    </script>
+</body>
+</html>

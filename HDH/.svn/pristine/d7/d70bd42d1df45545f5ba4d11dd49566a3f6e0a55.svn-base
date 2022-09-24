@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hdh.dao.IAdminDao">
+	<insert id="insertcorporateManagementAnalysis" parameterType="com.hdh.vo.ExcelVo">
+		INSERT INTO CORPORATE_MANAGEMENT_ANALYSIS(
+			industrialClassificationCode,
+			majorCommodity,
+			increaseSales,
+			earningsRatioSalesOperation,
+			equityCapitalRatio,
+			interestCoverageRatio,
+			turnoverRateAccountsReceivable
+		)
+		VALUE
+		(
+			#{industrialClassificationCode       },
+			#{majorCommodity                     },
+			#{increaseSales                      },
+			#{earningsRatioSalesOperation        },
+			#{equityCapitalRatio                 },
+			#{interestCoverageRatio              },
+			#{turnoverRateAccountsReceivable     }
+		)
+	</insert>
+
+	<update id="updateCMdo" parameterType="com.hdh.vo.ExcelVo">
+		UPDATE CORPORATE_MANAGEMENT_ANALYSIS
+		SET
+			  industrialClassificationCode = #{industrialClassificationCode}
+			, majorCommodity = #{majorCommodity}
+			, increaseSales = #{increaseSales}
+			, earningsRatioSalesOperation = #{earningsRatioSalesOperation}
+			, equityCapitalRatio = #{equityCapitalRatio}
+			, interestCoverageRatio = #{interestCoverageRatio}
+			, turnoverRateAccountsReceivable = #{turnoverRateAccountsReceivable}
+		WHERE no = #{no}
+	</update>
+
+	<select id="getCorporateManagementAnalysis" resultType="com.hdh.vo.ExcelVo">
+		SELECT * FROM CORPORATE_MANAGEMENT_ANALYSIS
+	</select>
+
+	<delete id="deleteCMdo">
+		DELETE FROM CORPORATE_MANAGEMENT_ANALYSIS
+	</delete>
+
+</mapper>

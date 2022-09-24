@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+</head>
+<body>
+    <div style="text-align: center;">
+    <h1 style="text-align: center;">HDH Project</h1>
+    	<h2>회원가입</h2>
+    	<form id="signupForm">
+    		<input type="text" placeholder="ID" name="id" id="id"><br>
+    		<input type="text" placeholder="PASSWORD" name="password" id="password"><br>
+	    	<select name="roll">
+	    		<option value="1">영업</option>
+	    		<option value="2">기업</option>
+	    		<option value="3">관리자</option>
+	    	</select><br>
+	    	<button type="button" onclick="signup();">회원가입</button>
+    	</form>
+    </div>
+
+    <script type="text/javascript">
+    function signup (){
+
+		var yn = confirm("회원가입 하시겠습니까?");
+
+		if(document.getElementById("id").value==''){
+			alert('아이디를 입력해주세요');
+			return false
+		}
+
+		if(document.getElementById("password").value==''){
+			alert('비밀번호를 입력해주세요');
+			return false
+		}
+
+		if (yn) {
+
+			$.ajax({
+
+				url: "/signup.do",
+				data: $("#signupForm").serialize(),
+				type: "POST",
+				success: function(data) {
+
+					alert(data);
+
+					location.href="/";
+				},
+				error: function() {
+					alert('이미 가입된 회원이거나 에러가 발생했습니다.');
+				}
+			});
+		}
+	}
+    </script>
+</body>
+</html>

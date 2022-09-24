@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hdh.dao.IOutputDao">
+
+	<select id="getCalculation" resultType="com.hdh.vo.CalculationVo" parameterType="com.hdh.vo.UserVo">
+		SELECT	NO,
+			    DATE,
+			    ID,
+			    EQUITY_CAPITAL_RATIO,
+			    FLOW_RATE,
+			    CHECKING_RATIO,
+			    DEBT_RATIO,
+			    BORROWING_DEPENDENCE,
+			    SHORT_TERM_BORROWING_RATIO,
+			    CASH_SECURITIES_RATIO,
+			    AVERAGE_LOAN_INTEREST_RATE,
+			    R_D_RATIO,
+			    BORROWING_SALES,
+			    FINANCIAL_EXPENSES_VS_LIABILITIES,
+			    INTEREST_COMPENSATION_MULTIPLE,
+			    RETURN_ASSETS,
+			    EARNINGS_RATIO_SALES_OPERATION,
+			    CONTINUED_BUSINESS_PROFIT_RATIO_BEFORE_SALES_TAX,
+			    NET_PROFIT_RATIO_SALES,
+			    FINANCIAL_EXPENSE_SALES_RATIO,
+			    INTEREST_COVERAGE_RATIO,
+			    RETURN_EQUITY,
+			    CAPITAL_TURNOVER,
+			    TURNOVER_RATE_ACCOUNTS_RECEIVABLE,
+			    INVENTORY_ASSET_TURNOVER_RATE,
+			    TURNOVER_RATE_TANGIBLE_ASSETS,
+			    TURNOVER_RATE_PURCHASE_DEBT,
+			    INCREASE_SALES,
+			    NET_INCOME_GROWTH_RATE,
+			    ASSET_GROWTH_RATE,
+			    GROWTH_RATE_EQUITY,
+			    PROPERTY_PLANT_EQUIPMENT_GROWTH_RATE,
+			    businessLicenseNumber,
+			    (SELECT industrialClassificationCode FROM companyregister WHERE businessLicenseNumber = #{businessLicenseNumber}) as industrialClassificationCode
+		 FROM financial_party_calculation
+		 WHERE id = #{id}
+	</select>
+
+	<select id="getcorporateManagementAnalysis" resultType="com.hdh.vo.ExcelVo" parameterType="String">
+		SELECT * FROM corporate_management_analysis
+		 WHERE industrialClassificationCode = #{data}
+	</select>
+
+</mapper>

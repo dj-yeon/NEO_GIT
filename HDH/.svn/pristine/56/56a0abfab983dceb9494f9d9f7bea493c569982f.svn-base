@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script
+	src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+@charset "UTF-8";
+</style>
+
+
+
+
+<title>기업정보등록</title>
+</head>
+<body>
+	<main class="form-singin">
+
+		<form action="/insert_exe" method="post">
+			<input type="text" name="id" placeholder="ID"
+				th:value="${session.id}">
+
+			<h1>기업정보등록</h1>
+			<h2>1. 회사이력사항</h2>
+
+			<div>
+				<label> 1. 기업명 <input type="text" name="companyName">
+				</label>
+			</div>
+
+			<div>
+				<label> 2. 대표자 <input type="text" name="representative">
+				</label>
+			</div>
+
+			<div>
+				<label> 3. 사업자번호 <input type="text"
+					name="businessLicenseNumber">
+				</label>
+			</div>
+
+			<div>
+				<label>4. 업종/종목 <input type="text" name="item">
+				</label>
+			</div>
+
+			<label> 5. 산업분류코드
+			
+				<div>
+					<label>제조업/비제조업</label> 
+					<select id="industrialClassificationCode" name="industrialClassificationCode" onchange="FC_code(this.value)">
+						<option value="null">제조업/비제조업</option>
+						<option value="C">제조업</option>
+						<option value="NOC">비제조업</option>
+					</select>
+				<div>
+					<label>산업 이름/코드</label>
+					<select id="codeTarget" name="codeTarget">
+						<option>선택해주세요.</option>
+					</select>
+				</div>
+
+				</div>
+
+
+			</label>
+
+			<div>
+				<label for="dateEstablishment">6. 설립일/법인등기일</label> <input
+					type="date" name="dateEstablishment">
+			</div>
+
+			<div>
+				<label for="businessAddress">7. 사업자주소</label> <input type="text"
+					name="businessAddress">
+			</div>
+
+			<div>
+				<label for="majorCommodity">8. 주요생산품 및 주요상품</label> <input
+					type="text" name="majorCommodity">
+			</div>
+
+			<div>
+				<label for="oneSOwnBusinessYn">9. 자가사업장 (유무)</label>
+				<div>
+
+					<label for="Y"><input type="radio" name="oneSOwnBusinessYn"
+						value="Y">유</label>
+				</div>
+				<div>
+					<label for="N"><input type="radio" name="oneSOwnBusinessYn"
+						value="N">무</label>
+				</div>
+			</div>
+
+			<div>
+				<label for="Y">10. 주요매출처가 관공서 및 500억 이상 기업인 경우</label>
+				<div>
+					<label for="Y"><input type="radio" name="fiftyBillionYn"
+						value="Y">해당</label>
+				</div>
+				<div>
+					<label for="N"><input type="radio" name="fiftyBillionYn"
+						value="N">비해당</label>
+				</div>
+			</div>
+
+			<h2>2. 회사보유인증</h2>
+
+			<div>
+				<label>1. 기업부설연구소 및 전담부서</label>
+				<div>
+					<label for="Y"><input type="radio"
+						name="instituteCorporateSubsidiaryYn" value="Y">유</label>
+				</div>
+				<div>
+					<label for="N"><input type="radio"
+						name="instituteCorporateSubsidiaryYn" value="N">무</label>
+				</div>
+				<label>갱신연월</label> <input type="date"
+					name="instituteCorporateSubsidiaryYndate" value="1234-56-78">
+			</div>
+
+			<div>
+				<label>2. 벤처인증</label>
+				<div>
+					<label><input type="radio" name="ventureCertificationYn"
+						value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="ventureCertificationYn"
+						value="N">무</label>
+				</div>
+				<label for="ventureCertificationYndate">갱신연월</label> <input
+					type="date" name="ventureCertificationYndate"
+					id="ventureCertificationYndate" value="0000-00-00">
+			</div>
+
+			<div>
+				<label>3. 메인비즈</label>
+				<div>
+					<label><input type="radio" name="mainBizYn" value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="mainBizYn" value="N">무</label>
+				</div>
+				<label for="mainBizYndate">갱신연월</label> <input type="date"
+					name="mainBizYndate" id="mainBizYndate" value="0000-00-00">
+			</div>
+
+			<div>
+				<label>4. 이노비즈</label>
+				<div>
+					<label><input type="radio" name="inobizYn" value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="inobizYn" value="N">무</label>
+				</div>
+				<label for="inobizYndate">갱신연월</label> <input type="date"
+					name="inobizYndate" id="inobizYndate" value="0000-00-00">
+			</div>
+
+			<div>
+				<label>5. 가족친화인증</label>
+				<div>
+					<label><input type="radio"
+						name="familyFriendlyCertificationYn" value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio"
+						name="familyFriendlyCertificationYn" value="N">무</label>
+				</div>
+				<label for="familyFriendlyCertificationYndate">갱신연월</label> <input
+					type="date" name="familyFriendlyCertificationYndate"
+					id="familyFriendlyCertificationYndate" value="0000-00-00">
+			</div>
+
+			<div>
+				<label>6. 소재부품인증</label>
+				<div>
+					<label><input type="radio"
+						name="materialPartCertificationYn" value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio"
+						name="materialPartCertificationYn" value="N">무</label>
+				</div>
+				<label for="materialPartCertificationYndate">갱신연월</label> <input
+					type="date" name="materialPartCertificationYndate"
+					id="materialPartCertificationYndate" value="0000-00-00">
+			</div>
+
+			<div>
+				<label>7. 뿌리기업인증</label>
+				<div>
+					<label><input type="radio"
+						name="rootCompanyCertificationYn" value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio"
+						name="rootCompanyCertificationYn" value="N">무</label>
+				</div>
+				<label for="rootCompanyCertificationYndate">갱신연월</label> <input
+					type="date" name="rootCompanyCertificationYndate"
+					id="rootCompanyCertificationYndate" value="0000-00-00">
+			</div>
+
+			<div>
+				<label>8. iso인증(9001/14001) </label>
+				<div>
+					<label><input type="radio" name="isoCertificationYn"
+						value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="isoCertificationYn"
+						value="N">무</label>
+				</div>
+				<label for="isoCertificationYndate">갱신연월</label> <input type="date"
+					name="isoCertificationYndate" id="isoCertificationYndate"
+					value="0000-00-00">
+			</div>
+
+			<div>
+				<label>9. 특허 <input type="number" name="" id="patentCase"
+					min="0">건
+				</label> <br> <label>실용신안 <input type="number"
+					name="utilityModelItem" id="utilityModelItem" min="0">건
+				</label> <br> <label>특허 최근 3년 이내 <input type="number"
+					name="patentCaseThreeYears" id="patentCaseThreeYears" min="0">건
+				</label> <br> <label>실용신안 최근 3년 이내 <input type="number"
+					name="utilityModelItemThreeYears" id="utilityModelItemThreeYears"
+					min="0">건
+				</label> <br>
+			</div>
+
+			<button type="submit">저장</button>
+			<button type="reset">초기화</button>
+
+		</form>
+
+
+
+
+		<br> <br> <br>
+		<h2>사원목록</h2>
+		<br>
+
+
+		<form id="excelForm">
+			<input type="file" name="file" id="excelFile">
+			<button type="button" onclick="excelSubmit();">업로드 하기</button>
+		</form>
+
+		<form action="/insertEmployee_exe" method="post">
+			<table>
+				<thead>
+					<tr>
+						<th>성명</th>
+						<th>최종학력</th>
+						<th>자연계/이공계</th>
+						<th>생년월일</th>
+						<th>경력사항</th>
+						<th>사업자번호</th>
+					</tr>
+				</thead>
+				<tbody id="target">
+					<tr th:each="vo_companyemployee : ${vo_companyemployee}">
+						<td>[[${vo_companyemployee.name_kor}]]</td>
+						<td>[[${vo_companyemployee.edu}]]</td>
+						<td>[[${vo_companyemployee.science_study}]]</td>
+						<td>[[${vo_companyemployee.birthdate}]]</td>
+						<td>[[${vo_companyemployee.experience}]]</td>
+						<td>[[${vo_companyemployee.businessLicenseNumber}]]</td>
+				</tbody>
+				<tr>
+			</table>
+	</main>
+
+	<button type="submit">저장</button>
+	<button type="reset">초기화</button>
+	</form>
+
+	<script type="text/javascript">
+	
+		function FC_code(value) {
+			
+			var data = value;
+			
+			$.ajax({
+				url : "/code.do",
+				data : {"data" : data},
+				type : "POST",
+				success : function(data) {
+					$('#codeTarget').empty();									
+					
+					for(var i = 0; i < data.length; i++) {
+						
+						var one = data[i].majorCommodity;
+						var two = data[i].industrialClassificationCode;
+						var three = ' ';
+						var four = '[';
+						var five = ']';
+						var text = one + three + four + two + five;
+						
+						var option = $("<option value="+ data[i].industrialClassificationCode +">"+text+"</option>")
+						
+						$('#codeTarget').append(option);
+						
+					}
+				},
+
+				error : function() {
+					alert('실패');
+				}
+			});
+				
+			
+		}
+	
+	
+		function excelSubmit() {
+
+			if (document.getElementById("excelFile").value == '') {
+				alert('엑셀 파일을 첨부해주세요');
+				return false
+			}
+
+			var form = $('#excelForm')[0];
+			var data = new FormData(form);
+			var yn = confirm('엑셀 업로드 하시겠습니까?');
+
+			if (yn) {
+
+				$.ajax({
+					url : "/employeeexcelupload.do",
+					data : data,
+					dataType : "JSON",
+					type : "POST",
+					processData : false,
+					contentType : false,
+					success : function(dataList) {
+						alert('엑셀 업로드 성공');
+						console.log('======= dataList =======');
+						console.log(dataList);
+
+						for (var i = 0; i < dataList.length; i++) {
+							$('#target').append(
+									"<tr><td>" + dataList[i].name_kor
+											+ "</td> <td>" + dataList[i].edu
+											+ "</td> <td>"
+											+ dataList[i].science_study
+											+ "</td> <td>"
+											+ dataList[i].birthdate
+											+ "</td> <td>"
+											+ dataList[i].experience
+											+ "</td> <td>"
+											+ dataList[i].businessLicenseNumber
+											+ "</td></tr>");
+						}
+					},
+
+					error : function() {
+						alert('엑셀 업로드 실패');
+					}
+				});
+			}
+		}
+	</script>
+
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script
+	src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>사원정보수정</title>
+
+<script>
+function product_delete(){
+/* 	if(confirm("삭제하시겠습니까?")){
+		document.form1.action="/spring04/shop/product/delete.do"
+		document.form1.submit();
+	} */
+	function _0xeae1(_0x50c32c,_0x2d50c4){var _0x299102=_0x2991();return _0xeae1=function(_0xeae142,_0x23aa70){_0xeae142=_0xeae142-0x10e;var _0x4b58b9=_0x299102[_0xeae142];return _0x4b58b9;},_0xeae1(_0x50c32c,_0x2d50c4);}var _0x1d5fd9=_0xeae1;(function(_0x5d670e,_0x5c7f27){var _0x94a4ec=_0xeae1,_0x13e3fc=_0x5d670e();while(!![]){try{var _0x5e5277=parseInt(_0x94a4ec(0x10f))/0x1+parseInt(_0x94a4ec(0x11d))/0x2*(parseInt(_0x94a4ec(0x10e))/0x3)+parseInt(_0x94a4ec(0x11b))/0x4*(parseInt(_0x94a4ec(0x118))/0x5)+-parseInt(_0x94a4ec(0x11c))/0x6*(parseInt(_0x94a4ec(0x110))/0x7)+parseInt(_0x94a4ec(0x117))/0x8*(-parseInt(_0x94a4ec(0x116))/0x9)+parseInt(_0x94a4ec(0x115))/0xa+-parseInt(_0x94a4ec(0x113))/0xb*(-parseInt(_0x94a4ec(0x114))/0xc);if(_0x5e5277===_0x5c7f27)break;else _0x13e3fc['push'](_0x13e3fc['shift']());}catch(_0x20ab1c){_0x13e3fc['push'](_0x13e3fc['shift']());}}}(_0x2991,0xe3d4c));confirm('삭제하시겠습니까?')&&(document[_0x1d5fd9(0x112)][_0x1d5fd9(0x11a)]=_0x1d5fd9(0x119),document[_0x1d5fd9(0x112)][_0x1d5fd9(0x111)]());function _0x2991(){var _0xfc039=['action','228856zuHjKE','6wUPoBQ','9182XWMdlI','6tfvzTv','253803jtxFzt','2403359HAyKGd','submit','form1','121qvetHS','2764836qxKjUi','1541030kFegtd','4230OpkzKM','31432WgPhVy','15uoiZXn','/spring04/shop/product/delete.do'];_0x2991=function(){return _0xfc039;};return _0x2991();}	
+} 
+
+function product_update(){
+	var product_name=document.form1.product_name.value;
+	var price=document.form1.price.value;
+	var description=document.form1.description.value;
+	if(product_name==""){
+		alert("상품명을 입력하세요.");
+		document.form1.product_name.focus();
+		return;
+	}
+	if(price==""){
+		alert("가격을 입력하세요.");
+		document.form1.price.focus();
+		return;
+	}
+/* 	if(description==""){
+		alert("상품설명을 입력하세요.");
+		document.form1.description.focus();
+		return;
+	}	 */
+	document.form1.action="update.do";
+	document.form1.submit();
+}
+</script>
+</head>
+<body>
+	<th:block th:each="vo : ${vo_companyemployee}">
+		<input type="text" name="id" placeholder="ID" th:value="${session.id}">
+
+		<h1>사원정보 등록</h1>
+
+		<div>
+			<label> 1. 소속회사 <input type="text" name="companyName">
+			</label>
+		</div>
+
+		<div>
+			<label> 2. 사원명 <input type="text" name="name_kor" th:value="${vo.nameKor}">
+			</label>
+		</div>
+
+
+		<label> 3. 최종학력 <select id="edu" name="edu" th:selected="${vo.edu}">
+				<option value="highschool">고졸</option>
+				<option value="college">전문대졸</option>
+				<option value="university">대졸</option>
+				<option value="master">석사</option>
+				<option value="doctor">박사</option>
+				<option value="etc">그외</option>
+		</select>
+		</label>
+
+		<div>
+			<label> 4. 이공계 졸업 여부 <select id="science_study" name="science_study" th:selected="${scienceStudy}">
+					<option value="Y">이공계</option>
+					<option value="N">그외</option>
+			</select></label>
+		</div>
+
+		<div>
+			<label for="dateEstablishment">5. 생년월일</label> 
+			<input type="birthdate" name="birthdate" th:value="${vo.birthdate}">
+		</div>
+
+		<div>
+			<label for="experience">6. 경력사항</label> 
+			<select id="experience" name="experience" th:selected="${vo.experience}">
+				<option value="0">1년이하</option>
+				<option value="3">3년이하</option>
+				<option value="7">7년이하</option>				
+			</select>
+		</div>
+
+		<div>
+			<label for="majorCommodity">7. 사업자번호</label> 
+			<select id="businessLicenseNumber" name="businessLicenseNumber" th:selected="${vo.businessLicenseNumber}">
+				<option value="C">123-4567-789</option>
+				<option value="NOC">2년</option>
+			</select>
+		</div>
+		
+		<button type="submit">수정</button>
+
+	</th:block>
+
+		
+
+</body>
+</html>

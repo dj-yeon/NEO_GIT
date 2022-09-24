@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+@charset "UTF-8";
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #efefef;
+    padding: 25px;
+}
+
+.container {
+    max-width: 900px;
+    width: 100%;
+    background-color: #fff;
+    margin: auto;
+    padding: 15px;
+    box-shadow: 0 2px 20px #0001, 0 1px 6px #0001;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+._table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+._table :is(th, td) {
+    border: 1px solid #0002;
+    padding: 8px 10px;
+}
+
+/* form field design start */
+.form_control {
+    border: 1px solid #0002;
+    background-color: transparent;
+    outline: none;
+    padding: 8px 12px;
+    font-family: 1.2rem;
+    width: 100%;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 0.3s ease-in-out;
+}
+
+.form_control::placeholder {
+    color: inherit;
+    opacity: 0.5;
+}
+
+.form_control:is(:focus, :hover) {
+    box-shadow: inset 0 1px 6px #0002;
+}
+
+/* form field design end */
+
+
+.success {
+    background-color: #24b96f !important;
+}
+
+.warning {
+    background-color: #ebba33 !important;
+}
+
+.primary {
+    background-color: #259dff !important;
+}
+
+.secondery {
+    background-color: #00bcd4 !important;
+}
+
+.danger {
+    background-color: #ff5722 !important;
+}
+
+.action_container {
+    display: inline-flex;
+}
+
+.action_container>* {
+    border: none;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.action_container>*+* {
+    border-left: 1px solid #fff5;
+}
+
+.action_container>*:hover {
+    filter: hue-rotate(-20deg) brightness(0.97);
+    transform: scale(1.05);
+    border-color: transparent;
+    box-shadow: 0 2px 10px #0004;
+    border-radius: 2px;
+}
+
+.action_container>*:active {
+    transition: unset;
+    transform: scale(.95);
+}
+</style>
+
+
+<title>기업정보등록</title>
+</head>
+<body>
+	<script type="text/javascript">
+	 function create_tr(table_id) {
+		    let table_body = document.getElementById(table_id),
+		        first_tr   = table_body.firstElementChild
+		        tr_clone   = first_tr.cloneNode(true);
+
+		    table_body.append(tr_clone);
+
+		    clean_first_tr(table_body.firstElementChild);
+		}
+
+		function clean_first_tr(firstTr) {
+		    let children = firstTr.children;
+		    
+		    children = Array.isArray(children) ? children : Object.values(children);
+		    children.forEach(x=>{
+		        if(x !== firstTr.lastElementChild)
+		        {
+		            x.firstElementChild.value = '';
+		        }
+		    });
+		}
+
+
+
+		function remove_tr(This) {
+		    if(This.closest('tbody').childElementCount == 1)
+		    {
+		        alert("You Don't have Permission to Delete This ?");
+		    }else{
+		        This.closest('tr').remove();
+		    }
+		}
+		    </script>
+
+	<main class="form-singin">
+
+		<form action="/insert_exe" method="post">
+			<input type="text" name="id" placeholder="ID"
+				th:value="${session.id}">
+
+			<h1>기업정보등록</h1>
+			<h2>1. 회사이력사항</h2>
+
+			<div>
+				<label> 1. 기업명 <input type="text" name="companyName">
+				</label>
+			</div>
+
+			<div>
+				<label> 2. 대표자 <input type="text" name="representative">
+				</label>
+			</div>
+
+			<div>
+				<label> 3. 사업자번호 <input type="text"
+					name="businessLicenseNumber">
+				</label>
+			</div>
+
+			<div>
+				<label>4. 업종/종목 <input type="text" name="item">
+				</label>
+			</div>
+
+			<label> 5. 산업분류코드 <input type="text"
+					name="industrialClassificationCode">
+				</label>
+
+
+			<!-- <div>
+				5. 산업분류코드
+				<div>
+					<label for="N"><input type="radio"
+						name="industrialClassificationCode" value="N">비제조업 </label>
+				</div>
+				<div>
+					<label for="Y"><input type="radio"
+						name="industrialClassificationCode" value="Y">제조업 </label>
+				</div>
+			</div> -->
+
+			<div>
+				<label for="dateEstablishment">6. 설립일/법인등기일</label> <input
+					type="date" name="dateEstablishment">
+			</div>
+
+			<div>
+				<label for="businessAddress">7. 사업자주소</label> <input type="text"
+					name="businessAddress">
+			</div>
+
+			<div>
+				<label for="majorCommodity">8. 주요생산품 및 주요상품</label> <input
+					type="text" name="majorCommodity">
+			</div>
+
+			<div>
+				<label for="oneSOwnBusinessYn">9. 자가사업장 (유무)</label>
+				<div>
+
+					<label for="Y"><input type="radio" name="oneSOwnBusinessYn"
+						value="Y">유</label>
+				</div>
+				<div>
+					<label for="N"><input type="radio" name="oneSOwnBusinessYn"
+						value="N">무</label>
+				</div>
+			</div>
+
+			<div>
+				<label for="Y">10. 주요매출처가 관공서 및 500억 이상 기업인 경우</label>
+				<div>
+					<label for="Y"><input type="radio" name="fiftyBillionYn"
+						value="Y">해당</label>
+				</div>
+				<div>
+					<label for="N"><input type="radio" name="fiftyBillionYn"
+						value="N">비해당</label>
+				</div>
+			</div>
+
+			<h2>2. 회사보유인증</h2>
+
+			<div>
+				<label>1. 기업부설연구소 및 전담부서1</label>
+				<div>
+					<label for="Y"><input type="radio"
+						name="instituteCorporateSubsidiaryYn" value="Y">유</label>
+				</div>
+				<div>
+					<label for="N"><input type="radio"
+						name="instituteCorporateSubsidiaryYn" value="N">무</label>
+				</div>
+				<label>갱신연월</label> <input type="date"
+					name="instituteCorporateSubsidiaryYndate" value="1234-56-78">
+			</div>
+
+			<div>
+				<label>2. 벤처인증</label>
+				<div>
+					<label><input type="radio" name="ventureCertificationYn"
+						value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="ventureCertificationYn"
+						value="N">무</label>
+				</div>
+				<label for="ventureCertificationYndate">갱신연월</label> <input
+					type="date" name="ventureCertificationYndate"
+					id="ventureCertificationYndate" value="0000-00-00">
+			</div>
+
+			<div>
+				<label>3. 메인비즈</label>
+				<div>
+					<label><input type="radio" name="mainBizYn"
+						value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="mainBizYn"
+						value="N">무</label>
+				</div>
+				<label for="mainBizYndate">갱신연월</label> <input type="date" name="mainBizYndate"
+					id="mainBizYndate" value="0000-00-00">
+			</div>
+
+			<div>
+				<label>4. 이노비즈</label>
+				<div>
+					<label><input type="radio" name="inobizYn" value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="inobizYn" value="N">무</label>
+				</div>
+				<label for="inobizYndate">갱신연월</label> <input type="date" name="inobizYndate"
+					id="inobizYndate" value="0000-00-00">
+			</div>
+
+			<div>
+				<label>5. 가족친화인증</label>
+				<div>
+					<label><input type="radio"
+						name="familyFriendlyCertificationYn"
+						value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio"
+						name="familyFriendlyCertificationYn "
+						value="N">무</label>
+				</div>
+				<label for="familyFriendlyCertificationYndate">갱신연월</label> <input
+					type="date" name="familyFriendlyCertificationYndate" id="familyFriendlyCertificationYndate"
+					value="0000-00-00">
+			</div>
+
+			<div>
+				<label>6. 소재부품인증</label>
+				<div>
+					<label><input type="radio"
+						name="materialPartCertificationYn"
+						value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio"
+						name="materialPartCertificationYn"
+						value="N">무</label>
+				</div>
+				<label for="materialPartCertificationYndate">갱신연월</label> <input
+					type="date" name="materialPartCertificationYndate" id="materialPartCertificationYndate"
+					value="0000-00-00">
+			</div>
+
+			<div>
+				<label>7. 뿌리기업인증</label>
+				<div>
+					<label><input type="radio"
+						name="rootCompanyCertificationYn"
+						value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio"
+						name="rootCompanyCertificationYn"
+						value="N">무</label>
+				</div>
+				<label for="rootCompanyCertificationYndate">갱신연월</label> <input
+					type="date" name="rootCompanyCertificationYndate" id="rootCompanyCertificationYndate"
+					value="0000-00-00">
+			</div>
+
+			<div>
+				<label>8. iso인증(9001/14001) </label>
+				<div>
+					<label><input type="radio" name="isoCertificationYn"
+						value="Y">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="isoCertificationYn"
+						value="N">무</label>
+				</div>
+				<label for="isoCertificationYndate">갱신연월</label> <input type="date"
+					name="isoCertificationYndate" id="isoCertificationYndate" value="0000-00-00">
+			</div>
+
+			<div>
+				<label>9. 특허 <input type="number" name="" id="patentCase"
+					min="0">건
+				</label> <br> <label>실용신안 <input type="number" name="utilityModelItem"
+					id="utilityModelItem" min="0">건
+				</label> <br> <label>특허 최근 3년 이내 <input type="number" name="patentCaseThreeYears"
+					id="patentCaseThreeYears" min="0">건
+				</label> <br> <label>실용신안 최근 3년 이내 <input type="number" name="utilityModelItemThreeYears"
+					id="utilityModelItemThreeYears" min="0">건
+				</label> <br>
+			</div>
+
+			<div class="container">
+				<table class="_table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Phone</th>
+							<th>Address</th>
+							<th width="50px">
+								<div class="action_container">
+									<button class="success" onclick="create_tr('table_body')">
+										<i class="fa fa-plus"></i>
+									</button>
+								</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody id="table_body">
+						<tr>
+							<td><input type="text" class="form_control"
+								placeholder="Jhon Dhoe"></td>
+							<td><input type="text" class="form_control"
+								placeholder="+880177x-xxxxxx"></td>
+							<td><textarea class="form_control"
+									placeholder="Enter Your Address..."></textarea></td>
+							<td>
+								<div class="action_container">
+									<button class="danger" onclick="remove_tr(this)">
+										<i class="fa fa-close"></i>
+									</button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+
+
+			<button type="submit">Submit</button>
+			<button type="reset">Reset</button>
+
+		</form>
+		
+		
+
+	</main>
+
+
+
+</body>
+</html>

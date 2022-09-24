@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>기업정보수정</title>
+
+<script>
+function product_delete(){
+/* 	if(confirm("삭제하시겠습니까?")){
+		document.form1.action="/spring04/shop/product/delete.do"
+		document.form1.submit();
+	} */
+	function _0xeae1(_0x50c32c,_0x2d50c4){var _0x299102=_0x2991();return _0xeae1=function(_0xeae142,_0x23aa70){_0xeae142=_0xeae142-0x10e;var _0x4b58b9=_0x299102[_0xeae142];return _0x4b58b9;},_0xeae1(_0x50c32c,_0x2d50c4);}var _0x1d5fd9=_0xeae1;(function(_0x5d670e,_0x5c7f27){var _0x94a4ec=_0xeae1,_0x13e3fc=_0x5d670e();while(!![]){try{var _0x5e5277=parseInt(_0x94a4ec(0x10f))/0x1+parseInt(_0x94a4ec(0x11d))/0x2*(parseInt(_0x94a4ec(0x10e))/0x3)+parseInt(_0x94a4ec(0x11b))/0x4*(parseInt(_0x94a4ec(0x118))/0x5)+-parseInt(_0x94a4ec(0x11c))/0x6*(parseInt(_0x94a4ec(0x110))/0x7)+parseInt(_0x94a4ec(0x117))/0x8*(-parseInt(_0x94a4ec(0x116))/0x9)+parseInt(_0x94a4ec(0x115))/0xa+-parseInt(_0x94a4ec(0x113))/0xb*(-parseInt(_0x94a4ec(0x114))/0xc);if(_0x5e5277===_0x5c7f27)break;else _0x13e3fc['push'](_0x13e3fc['shift']());}catch(_0x20ab1c){_0x13e3fc['push'](_0x13e3fc['shift']());}}}(_0x2991,0xe3d4c));confirm('삭제하시겠습니까?')&&(document[_0x1d5fd9(0x112)][_0x1d5fd9(0x11a)]=_0x1d5fd9(0x119),document[_0x1d5fd9(0x112)][_0x1d5fd9(0x111)]());function _0x2991(){var _0xfc039=['action','228856zuHjKE','6wUPoBQ','9182XWMdlI','6tfvzTv','253803jtxFzt','2403359HAyKGd','submit','form1','121qvetHS','2764836qxKjUi','1541030kFegtd','4230OpkzKM','31432WgPhVy','15uoiZXn','/spring04/shop/product/delete.do'];_0x2991=function(){return _0xfc039;};return _0x2991();}	
+} 
+
+function product_update(){
+	var product_name=document.form1.product_name.value;
+	var price=document.form1.price.value;
+	var description=document.form1.description.value;
+	if(product_name==""){
+		alert("상품명을 입력하세요.");
+		document.form1.product_name.focus();
+		return;
+	}
+	if(price==""){
+		alert("가격을 입력하세요.");
+		document.form1.price.focus();
+		return;
+	}
+/* 	if(description==""){
+		alert("상품설명을 입력하세요.");
+		document.form1.description.focus();
+		return;
+	}	 */
+	document.form1.action="update.do";
+	document.form1.submit();
+}
+</script>
+</head>
+<body>
+
+	<h2>상품 정보 수정/삭제</h2>
+
+	<th:block th:each="vo : ${Vo}">
+		<!--  <form name="form1" method="post" enctype="multipart/form-data"> -->
+		<form name="form1" action="companymodify_exe" method="post">
+
+			<div>
+				<label> 1. 기업명 <input type="text" name="companyName"
+					th:value="${vo.companyName}">
+				</label>
+			</div>
+
+			<div>
+				<label> 2. 대표자 <input type="text" name="representative"
+					th:value="${vo.representative}">
+				</label>
+			</div>
+
+			<div>
+				<label> 3. 사업자번호 <input type="text"
+					name="businessLicenseNumber" th:value="${vo.businessLicenseNumber}">
+				</label>
+			</div>
+
+			<div>
+				<label>4. 업종/종목 <input type="text" name="item"
+					th:value="${vo.item}">
+				</label>
+			</div>
+
+			<label> 5. 산업분류코드 <input type="text"
+				name="industrialClassificationCode"
+				th:value="${vo.industrialClassificationCode}">
+			</label>
+
+			<div>
+				<label for="dateEstablishment">6. 설립일/법인등기일</label> <input
+					type="date" name="dateEstablishment"
+					th:value="${vo.dateEstablishment}">
+			</div>
+
+			<div>
+				<label for="businessAddress">7. 사업자주소</label> <input type="text"
+					name="businessAddress" th:value="${vo.businessAddress}">
+			</div>
+
+			<div>
+				<label for="majorCommodity">8. 주요생산품 및 주요상품</label> <input
+					type="text" name="majorCommodity" th:value="${vo.majorCommodity}">
+			</div>
+
+			<div>
+				<label for="oneSOwnBusinessYn">9. 자가사업장 (유무)</label>
+				<div>
+
+					<label for="Y"><input type="radio" name="oneSOwnBusinessYn"
+						value="Y"
+						th:attr="checked=${vo.oneSOwnBusinessYn.toString() == 'Y' ? 'true' : 'false'}">유</label>
+					<label for="N"><input type="radio" name="oneSOwnBusinessYn"
+						value="N"
+						th:attr="checked=${vo.oneSOwnBusinessYn.toString() == 'N' ? 'true' : 'false'}">무</label>
+				</div>
+			</div>
+
+			<div>
+				<label for="Y">10. 주요매출처가 관공서 및 500억 이상 기업인 경우</label>
+				<div>
+					<label for="Y"><input type="radio" name="fiftyBillionYn"
+						value="Y"
+						th:attr="checked=${vo.fiftyBillionYn.toString() == 'Y' ? 'true' : 'false'}">해당</label>
+					<label for="N"><input type="radio" name="fiftyBillionYn"
+						value="N"
+						th:attr="checked=${vo.fiftyBillionYn.toString() == 'N' ? 'true' : 'false'}">비해당</label>
+				</div>
+			</div>
+
+			<h2>2. 회사보유인증</h2>
+
+			<div>
+				<label>1. 기업부설연구소 및 전담부서</label>
+				<div>
+					<label for="Y"><input type="radio"
+						name="instituteCorporateSubsidiaryYn" value="Y"
+						th:attr="checked=${vo.instituteCorporateSubsidiaryYn.toString() == 'Y' ? 'true' : 'false'}">유</label>
+				</div>
+				<div>
+					<label for="N"><input type="radio"
+						name="instituteCorporateSubsidiaryYn" value="N"
+						th:attr="checked=${vo.instituteCorporateSubsidiaryYn.toString() == 'N' ? 'true' : 'false'}">무</label>
+				</div>
+				<label>갱신연월</label> <input type="date"
+					name="instituteCorporateSubsidiaryYndate" value="1234-56-78"
+					th:value="${vo.instituteCorporateSubsidiaryYndate}">
+			</div>
+
+			<div>
+				<label>2. 벤처인증</label>
+				<div>
+					<label><input type="radio" name="ventureCertificationYn"
+						value="Y"
+						th:attr="checked=${vo.ventureCertificationYn.toString() == 'Y' ? 'true' : 'false'}">유</label>
+					<label><input type="radio" name="ventureCertificationYn"
+						value="N"
+						th:attr="checked=${vo.ventureCertificationYn.toString() == 'N' ? 'true' : 'false'}">무</label>
+				</div>
+				<label for="ventureCertificationYndate">갱신연월</label> <input
+					type="date" name="ventureCertificationYndate"
+					id="ventureCertificationYndate" value="0000-00-00"
+					th:value="${vo.ventureCertificationYndate}">
+			</div>
+
+			<div>
+				<label>3. 메인비즈</label>
+				<div>
+					<label><input type="radio" name="mainBizYn" value="Y"
+						th:attr="checked=${vo.mainBizYn.toString() == 'Y' ? 'true' : 'false'}">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="mainBizYn" value="N"
+						th:attr="checked=${vo.mainBizYn.toString() == 'N' ? 'true' : 'false'}">무</label>
+				</div>
+				<label for="mainBizYndate">갱신연월</label> <input type="date"
+					name="mainBizYndate" value="0000-00-00"
+					th:value="${vo.mainBizYndate}">
+			</div>
+
+			<div>
+				<label>4. 이노비즈</label>
+				<div>
+					<label><input type="radio" name="inobizYn" value="Y"
+						th:attr="checked=${vo.inobizYn.toString() == 'Y' ? 'true' : 'false'}">유</label>
+					<label><input type="radio" name="inobizYn" value="N"
+						th:attr="checked=${vo.inobizYn.toString() == 'N' ? 'true' : 'false'}">무</label>
+				</div>
+				<label for="inobizYndate">갱신연월</label> <input type="date"
+					name="inobizYndate" value="0000-00-00"
+					th:value="${vo.inobizYndate}">
+			</div>
+
+			<div>
+				<label>5. 가족친화인증</label>
+				<div>
+					<label><input type="radio"
+						name="familyFriendlyCertificationYn" value="Y"
+						th:attr="checked=${vo.familyFriendlyCertificationYn.toString() == 'Y' ? 'true' : 'false'}">유</label>
+					<label><input type="radio"
+						name="familyFriendlyCertificationYn" value="N"
+						th:attr="checked=${vo.familyFriendlyCertificationYn.toString() == 'N' ? 'true' : 'false'}">무</label>
+				</div>
+				<label for="familyFriendlyCertificationYndate">갱신연월</label> <input
+					type="date" name="familyFriendlyCertificationYndate"
+					value="0000-00-00"
+					th:value="${vo.familyFriendlyCertificationYndate}">
+			</div>
+
+			<div>
+				<label>6. 소재부품인증</label>
+				<div>
+					<label><input type="radio"
+						name="materialPartCertificationYn" value="Y"
+						th:attr="checked=${vo.materialPartCertificationYn.toString() == 'Y' ? 'true' : 'false'}">유</label>
+				</div>
+				<div>
+					<label><input type="radio"
+						name="materialPartCertificationYn" value="N"
+						th:attr="checked=${vo.materialPartCertificationYn.toString() == 'N' ? 'true' : 'false'}">무</label>
+				</div>
+				<label for="materialPartCertificationYndate">갱신연월</label> <input
+					type="date" name="materialPartCertificationYndate"
+					value="0000-00-00" th:value="${vo.materialPartCertificationYndate}">
+			</div>
+
+			<div>
+				<label>7. 뿌리기업인증</label>
+				<div>
+					<label><input type="radio"
+						name="rootCompanyCertificationYn" value="Y"
+						th:attr="checked=${vo.rootCompanyCertificationYn.toString() == 'Y' ? 'true' : 'false'}">유</label>
+				</div>
+				<div>
+					<label><input type="radio"
+						name="rootCompanyCertificationYn" value="N"
+						th:attr="checked=${vo.rootCompanyCertificationYn.toString() == 'N' ? 'true' : 'false'}">무</label>
+				</div>
+				<label for="rootCompanyCertificationYndate">갱신연월</label> <input
+					type="date" name="rootCompanyCertificationYndate"
+					value="0000-00-00" th:value="${vo.rootCompanyCertificationYndate}">
+			</div>
+
+			<div>
+				<label>8. iso인증(9001/14001) </label>
+				<div>
+					<label><input type="radio" name="isoCertificationYn"
+						value="Y"
+						th:attr="checked=${vo.isoCertificationYn.toString() == 'Y' ? 'true' : 'false'}">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="isoCertificationYn"
+						value="N"
+						th:attr="checked=${vo.isoCertificationYn.toString() == 'N' ? 'true' : 'false'}">무</label>
+				</div>
+				<label for="isoCertificationYndate">갱신연월</label> <input type="date"
+					name="isoCertificationYndate" value="0000-00-00"
+					th:value="${vo.isoCertificationYndate}">
+			</div>
+
+			<div>
+				<label>9. 특허 <input type="number" name="" id="patentCase"
+					min="0">건
+				</label> <br> <label>실용신안 <input type="number"
+					name="utilityModelItem" min="0" th:value="${vo.utilityModelItem}">건
+				</label> <br> <label>특허 최근 3년 이내 <input type="number"
+					name="patentCaseThreeYears" min="0"
+					th:value="${vo.patentCaseThreeYears}">건
+				</label> <br> <label>실용신안 최근 3년 이내 <input type="number"
+					name="utilityModelItemThreeYears"
+					th:value="${vo.utilityModelItemThreeYears}" min="0">건
+				</label> <br>
+			</div>
+
+			<input type="submit" value="수정하기">
+
+		</form>
+	</th:block>
+</body>
+</html>

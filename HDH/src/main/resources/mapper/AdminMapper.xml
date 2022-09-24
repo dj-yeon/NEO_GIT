@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hdh.dao.IAdminDao">
+	<insert id="insertcorporateManagementAnalysis" parameterType="com.hdh.vo.ExcelVo">
+		INSERT INTO neo_corporate_management_analysis(
+			industrialClassificationCode,
+			majorCommodity,
+			increaseSales,
+			earningsRatioSalesOperation,
+			equityCapitalRatio,
+			interestCoverageRatio,
+			turnoverRateAccountsReceivable
+		)
+		VALUE
+		(
+			#{industrialClassificationCode       },
+			#{majorCommodity                     },
+			#{increaseSales                      },
+			#{earningsRatioSalesOperation        },
+			#{equityCapitalRatio                 },
+			#{interestCoverageRatio              },
+			#{turnoverRateAccountsReceivable     }
+		)
+	</insert>
+
+	<update id="updateCMdo" parameterType="com.hdh.vo.ExcelVo">
+		UPDATE neo_corporate_management_analysis
+		SET industrialClassificationCode = #{industrialClassificationCode}
+			, majorCommodity = #{majorCommodity}
+			, increaseSales = #{increaseSales}
+			, earningsRatioSalesOperation = #{earningsRatioSalesOperation}
+			, equityCapitalRatio = #{equityCapitalRatio}
+			, interestCoverageRatio = #{interestCoverageRatio}
+			, turnoverRateAccountsReceivable = #{turnoverRateAccountsReceivable}
+		WHERE no = #{no}
+	</update>
+
+	<select id="getCorporateManagementAnalysis" resultType="com.hdh.vo.ExcelVo">
+		SELECT * FROM neo_corporate_management_analysis
+	</select>
+
+	<delete id="deleteCMdo">
+		DELETE FROM neo_corporate_management_analysis
+	</delete>
+
+	<insert id="insertPolicyFund" parameterType="com.hdh.vo.PolicyFundingConditionsVo">
+		INSERT INTO neo_policy_funding_conditions
+		(
+			POLICY_FUND_NAME
+			, INDUSTRIAL_CLASSIFICATION_CODE
+			, BUSINESS_ABILITY
+			, INSTITUTE_CORPORATE_SUBSIDIARY_YN
+			, VENTURE_CERTIFICATION_YN
+			, MAIN_BIZ_YN, INOBIZ_YN
+			, PATENT_CASE_THREE_YEARS_YN
+			, MATERIAL_PART_CERTIFICATION_YN
+			, FAMILY_FRIENDLY_CERTIFICATION_YN
+			, ROOT_COMPANY_CERTIFICATION_YN
+			, ISO_CERTIFICATION_YN
+			, REGULAR_WORKER_FIVE_YN
+			, FACTORY_YN
+		)
+		VALUE
+		(
+			#{policyFundName}
+			, #{industrialClassificationCode}
+			, #{BusinessAbility}
+			, #{InstituteCorporateSubsidiaryYn}
+			, #{VentureCertificationYn}
+			, #{InobizYn}
+			, #{MainBizYn}
+			, #{PatentCaseThreeYearsYn}
+			, #{MaterialPartCertificationYn}
+			, #{FamilyFriendlyCertificationYn}
+			, #{RootCompanyCertificationYn}
+			, #{IsoCertificationYn}
+			, #{RegularWorkerFiveYn}
+			, #{FactoryYn}
+		)
+	</insert>
+
+	<select id="getPolicyFund" resultType="com.hdh.vo.PolicyFundingConditionsVo">
+		SELECT * FROM neo_policy_funding_conditions
+	</select>
+
+</mapper>

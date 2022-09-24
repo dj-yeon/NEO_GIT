@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script
+	src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+@charset "UTF-8";
+</style>
+
+
+
+
+<title>사원정보등록</title>
+</head>
+<body>
+	<form action="/empinsert_exe" method="post">
+		<input type="text" name="id" placeholder="ID" th:value="${session.id}">
+
+		<h1>사원정보 등록</h1>
+
+		<div>
+			<label> 1. 소속회사 <input type="text" name="companyName">
+			</label>
+		</div>
+
+		<div>
+			<label> 2. 사원명 <input type="text" name="nameKor">
+			</label>
+		</div>
+
+
+		<label> 3. 최종학력 <select id="edu" name="edu">
+				<option value="highschool">고졸</option>
+				<option value="college">전문대졸</option>
+				<option value="university">대졸</option>
+				<option value="master">석사</option>
+				<option value="doctor">박사</option>
+				<option value="etc">그외</option>
+		</select>
+		</label>
+
+		<div>
+			<label> 4. 이공계 졸업 여부 <select id="scienceStudy" name="science_study">
+					<option value="Y">이공계</option>
+					<option value="N">그외</option>
+			</select></label>
+		</div>
+
+		<div>
+			<label for="dateEstablishment">5. 생년월일</label> 
+			<input type="date" name="birthdate">
+		</div>
+
+		<div>
+			<label for="experience">6. 경력사항</label> 
+			<select id="experience" name="experience">
+				<option value="0">1년이하</option>
+				<option value="3">3년이하</option>3
+				<option value="7">7년이하</option>				
+			</select>
+		</div>
+
+		<div>
+			<label for="majorCommodity">7. 사업자번호</label> 
+			<select id="businessLicenseNumber" name="businessLicenseNumber">
+				<option value="C">123-4567-789</option>
+				<option value="NOC">2년</option>
+			</select>
+		</div>
+
+
+		<button type="submit">저장</button>
+		<button type="reset">초기화</button>
+
+	</form>
+
+
+</body>
+
+
+
+
+
+
+<h2>사원목록 엑셀로 등록하기</h2>
+
+<form id="excelForm">
+	<input type="file" name="file" id="excelFile">
+	<button type="button" onclick="excelSubmit();">업로드 하기</button>
+</form>
+
+
+<script type="text/javascript">
+	function FC_code(value) {
+
+		var data = value;
+
+		$.ajax({
+					url : "/code.do",
+					data : {
+						"data" : data
+					},
+					type : "POST",
+					success : function(data) {
+						$('#industrialClassificationCode').empty();
+
+						for (var i = 0; i < data.length; i++) {
+
+							var one = data[i].majorCommodity;
+							var two = data[i].industrialClassificationCode;
+							var three = ' ';
+							var four = '[';
+							var five = ']';
+							var text = one + three + four + two + five;
+
+							var option = $("<option value="+ data[i].industrialClassificationCode +">"
+									+ text + "</option>")
+
+							$('#industrialClassificationCode').append(option);
+
+						}
+					},
+
+					error : function() {
+						alert('실패');
+					}
+				});
+	}
+</script>
+
+
+</html>

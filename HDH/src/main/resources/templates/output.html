@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <title>Document</title>
+
+    <style>
+        pre {
+            font-family: Malgun Gothic;
+            font-size: 20px;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+</head>
+<body>
+    <h1 style="text-align: center;">기업진단 - 출력사항</h1>
+    <h2>담당자 회사소개 및 인사말</h2><br>
+    <textarea cols="100" rows="10"></textarea>
+    <h2>담당자 프로필 연락처</h2><br>
+    <textarea cols="100" rows="10"></textarea>
+    <hr class="hr">
+    <h1>기업진단</h1>
+    <pre>
+기업의 요청으로 전문 조직이나 전문가가 기업 경영의 실태를 객관적으로 조사하여 문제점을 발견하고 합리적인 경영방법을 제시하는 일.
+    </pre>
+    <h2>기업진단 방법</h2>
+    <pre>
+1. 정량적평가 : 대표적인 기업진단방식으로 양적·계량적·수량적 평가하는 방식으로 재무제표 평가 방식이 있습니다.
+정량적 평가 방식으로 산업평균대비 당사의 성장성, 수익성, 안정성, 활동성 지표와 비교하여 좋고 나쁨을 판단하는 진단방식입니다.
+
+2. 정성적평가 : 비계량적인 직절자료평가로 제품, 연구개발능력, 최고경영자 및 인적구성, 생산 및 마케팅능력 등이 있으며
+ 기업의 장기적 평가의 기본지표를 판단하는 진단방식으로 기술성 평가방식은 정성적평가의 대표적인 평가방식입니다.
+    </pre>
+    <h2>목적지도</h2>
+    <pre>
+기업의 목표를 설정하고 목표에 대비하여 사전준비하여 지도하는 방식으로 대표적으로 정책자금지도 , R&D지도 , 병력특례지도 등이 있습니다.
+
+1. 정책자금지도: 좀더 좋은정책자금을 최소의 자본비용으로 조달하는 목적으로 지도하는 것입니다.
+
+2. R&D 지도: 기업에 상태에 맟추어 적절한 R&D를 선택 매 것입니다.
+
+3. 병력특례지도: 인력수급이 어려운 기업들의 애로사항을 파악하여 병력특례제도를 활용하여 인력수급애로상황을 파악하고 해결책을 지도 하는 것입니다.
+    </pre>
+    <hr class="hr">
+    <h1>재무적 평가</h1>
+
+    <th:block th:each="list : ${List}">
+    	<input type="text" th:value="${list.increaseSales}" id="increaseSales">
+    	<input type="text" th:value="${list.earningsRatioSalesOperation}" id="earningsRatioSalesOperation">
+    	<input type="text" th:value="${list.equityCapitalRatio}" id="equityCapitalRatio">
+    	<input type="text" th:value="${list.interestCoverageRatio}" id="interestCoverageRatio">
+    	<input type="text" th:value="${list.turnoverRateAccountsReceivable}" id="turnoverRateAccountsReceivable">
+    </th:block>
+	<br>
+    <th:block th:each="avglist : ${AvgList}">
+    	<input type="text" th:value="${avglist.increaseSales}" id="avgIncreaseSales">
+    	<input type="text" th:value="${avglist.earningsRatioSalesOperation}" id="avgEarningsRatioSalesOperation">
+    	<input type="text" th:value="${avglist.equityCapitalRatio}" id="avgEquityCapitalRatio">
+    	<input type="text" th:value="${avglist.interestCoverageRatio}" id="avgInterestCoverageRatio">
+    	<input type="text" th:value="${avglist.turnoverRateAccountsReceivable}" id="avgTurnoverRateAccountsReceivable">
+    </th:block>
+
+
+    <h2>그래프</h2>
+    <div style="display: grid; border: solid 1px; grid-template-columns: 1fr 1fr;" >
+    	<div class="item">
+			<canvas id="myChart"></canvas>
+    	</div>
+    	<div class="item">
+	    	<h2 style="text-align: center;">매출액증가율(성장성)</h2>
+	    	<pre id="show1" style="display: none;">
+대표적인 성장성 지표로 매출액증가율이 있습니다.
+산업평균보다 성장지표가 좋지 않으므로 매출액증가에 대한 부분을 적절히 관리가 필요합니다.</pre>
+	    </div>
+    </div>
+    <div style="display: grid; border: solid 1px; grid-template-columns: 1fr 1fr;">
+		<div class="item">
+		    <canvas id="myChart2"></canvas>
+    	</div>
+    	<div class="item">
+	    	<h2 style="text-align: center;">영업이익률(수익성)</h2>
+	    	<pre id="show2" style="display: none;">
+대표적인 수익성 지표로 영업이익률 혹은 순이익률이 있습니다.
+수익성이 지표가 좋지 않을때는 매출원가 혹은 경상적 비용( 이자비용등 )의 관리가 필요합니다.</pre>
+	    </div>
+    </div>
+    <div style="display: grid; border: solid 1px; grid-template-columns: 1fr 1fr;">
+		<div class="item">
+		    <canvas id="myChart3"></canvas>
+    	</div>
+    	<div class="item">
+	    	<h2 style="text-align: center;">자기자본비율(안정성)</h2>
+	    	<pre id="show3" style="display: none;">
+대표적인 안정성 지표로 이자보상비율이 있습니다.
+이자보상비율은 이자비용대비 영업이익률을 계산하는 방식으로 이자 비용높은 기업은 안정성지표가 좋지 않게 나타납니다.
+따라서 영업이익 혹은 이자비용의 관리가 필요합니다.</pre>
+	    </div>
+    </div>
+    <div style="display: grid; border: solid 1px; grid-template-columns: 1fr 1fr;">
+		<div class="item">
+		    <canvas id="myChart4"></canvas>
+    	</div>
+    	<div class="item">
+	    	<h2 style="text-align: center;">이자보상비율(수익성)</h2>
+	    	<pre id="show4" style="display: none;">
+대표적인 수익성 지표로 영업이익률 혹은 순이익률이 있습니다.
+수익성이 지표가 좋지 않을때는 매출원가 혹은 경상적 비용( 이자비용등 )의 관리가 필요합니다.</pre>
+	    </div>
+    </div>
+    <div style="display: grid; border: solid 1px; grid-template-columns: 1fr 1fr;">
+		<div class="item">
+		    <canvas id="myChart5"></canvas>
+    	</div>
+    	<div class="item">
+	    	<h2 style="text-align: center;">매출채권회전율(활동성)</h2>
+	    	<pre id="show5" style="display: none;">
+대표적인 활동성 지표로 회전율이 있으며
+자산의 활용도를 판단하는 기준평가로 활동성은 매출액이 낮게 나올 때 좋지 않은 지표가 나옵니다.
+따라서 활동성이 낮은 기업은 매출액 관리가 필요합니다.</pre>
+	    </div>
+    </div>
+    <h2>상징성 수익성 안정성 활동성 비교</h2>
+    <pre>
+성장성이 산업평균보다 부족시
+→ 대표적인 성장성 지표로 매출액증가율이 있습니다.
+산업평균보다 성장지표가 좋지 않으므로 매출액증가에 대한 부분을 적절히 관리가 필요합니다.
+
+수익성이 산업평균보다 부족시
+→ 대표적인 수익성 지표로 영업이익률 혹은 순이익률이 있습니다.
+수익성이 지표가 좋지 않을때는 매출원가 혹은 경상적 비용( 이자비용등 )의 관리가 필요합니다.
+
+안정성이 산업평균보다 부족시
+→ 대표적인 안정성 지표로 이자보상비율이 있습니다.
+이자보상비율은 이자비용대비 영업이익률을 계산하는 방식으로 이자 비용높은 기업은 안정성지표가 좋지 않게 나타납니다.
+따라서 영업이익 혹은 이자비용의 관리가 필요합니다.
+
+활동성이 산업평균보다 부족시
+→ 대표적인 활동성 지표로 회전율이 있으며 자산의 활용도를 판단하는 기준평가로 활동성은 매출액이 낮게 나올 때 좋지 않은 지표가 나옵니다.
+따라서 활동성이 낮은 기업은 매출액 관리가 필요합니다.
+    </pre>
+    <hr>
+    <h1>정책자금 및 사업용 자산 취득가능 유무</h1>
+    <h2>정책자금이란?</h2>
+    <pre>
+정책금융(政策金融)은 뚜렷한 목적을 정해 놓지 않고 무차별적으로 지원되는 일반 자금대출과 달리 어떤 특정한 정책목적을 가지고 특정부문에 지원되는 대출이다.
+정책금융에는 중소기업정책자금·무역금융·주택자금 등이 있다.
+정책금융을 네 가지의 성격으로 분류하면 정부출연금, 정부보조금, 정부융자금, 정부보증금으로 나뉘며 유관기관으로는 중소벤처기업진흥공단·신용보증기금·지역신용보증재단 등이 있다.
+    </pre>
+    <pre>
+개선전
+당사는 (초기창업,중기창업,후기창업,신성장)(일반기업,혁신기업)(제조업,비제조업)으로서 기차입금 운전자금(단기차입금) 시설자금(장기차입금)으로 운전자금( ) 시설자금( )의 여력이 있습니다.
+    </pre>
+    <pre>
+개선방안
+일반기업 → 혁신기업
+    </pre>
+    <pre>
+개선후
+기차입금 운전자금(단기차입금 시설자금(장기차입금)을 제외한 운전자금( ) 시설자금( )의 여력이 있습니다.
+    </pre>
+    <pre>
+추천정책자금
+1.
+2.
+3.
+4.
+    </pre>
+    <pre>
+사업용자산 취득가능 유 / 무
+필요자금 × 30% ≥ 현금성자산 ☞ 사업용 자산 취득가능
+
+필요자금 × 30% < 현금성자산 ☞ 사업용 자산 취득불가능
+    </pre>
+    <hr>
+    <h1>R&D 지원가능 유무</h1>
+    <h2>(R&D) 란</h2>
+    <pre>
+민간 기관 따위에서 정부의 사업을 대행할 때, 정부에서 그 기관에 내어 주는 돈. 즉 정부가 민간 기관이 연구개발사업시 연구개발자금을 지원하는것
+당사는 (초기창업,중기창업,후기창업,신성장)(일반기업,혁신기업)(제조업,비제조업)으로서 현재 ( ) R&D 지원 가능
+    </pre>
+    <pre>
+개선방안
+일반기업 → 혁신기업
+    </pre>
+    <pre>
+개선후 가능한 R&D
+1.
+2.
+3.
+4.
+    </pre>
+    <hr>
+    <h1>병력특례 지원 가능 체크</h1>
+    <h2>병력특례지원제도란?</h2>
+    <pre>
+제조업 인력난 해소를 위해 1992년부터 시행하고 있는 제도로 외국인 투자비 중 49%가 넘지 않는 1개 법인 1개 공장만 신청할 수 있다.
+현역의 경우 전기·전자·통신·항공분야 등 4개 자격종목에만 취업이 가능하며, 의무복무 기간은 5년이다. 특례업체에 취업하여 회사가 필요로 하는 기술자격을 취득하면 혜택을 받을 수 있다.
+    </pre>
+    <pre>
+신청업체 평가 지표 - 최대 12점
+가족친화인증 - 2점
+벤처인증 - 2점
+이노비즈인증 - 2점
+메인비즈인증 - 2점
+소재부품인증 - 4점
+뿌리기업전문기업 - 4점
+뿌리기업 - 2점
+기업부설연구소 - 3점
+전담부서 - 2점
+    </pre>
+    <pre>
+당사는 현재 평가지표가 ( ) 점
+개선방안
+취득가능한 인증 다 추천
+개선후 당사의 평가지표는 ( )점
+    </pre>
+</body>
+	<script type="text/javascript">
+            /*
+            var context = document
+                .getElementById('myChart')
+                .getContext('2d');
+            var myChart = new Chart(context, {
+                type: 'line', // 차트의 형태
+                data: { // 차트에 들어갈 데이터
+                    labels: [
+                        //x 축
+                    	'매출액증가율','영업이익률','자기자본비율','이자보상비율','매출채권회전율'
+                    ],
+                    datasets: [{ //데이터
+                            label: '회사명', //차트 제목
+                            fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                            data: [21,19,25,20,23],
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132)',
+                  }, {
+                	  // 업계 평균 라인
+                      type: 'line',
+                      label: '업계평균',
+                      data: [-5, 2.46, 40.07, 310.52 , 9.85],
+                      fill: true,
+                      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                      borderColor: 'rgba(54, 162, 235, 1)',
+                    }]
+                },
+            });
+            */
+	</script>
+	<script type="text/javascript">
+		// 즉시실행함수
+		$(document).ready(function(){
+
+			if( parseFloat($('#increaseSales').val()) < parseFloat($('#avgIncreaseSales').val())) {
+				$('#show1').show();
+			}
+
+			if( parseFloat($('#earningsRatioSalesOperation').val()) < parseFloat($('#avgEarningsRatioSalesOperation').val())) {
+				$('#show2').show();
+			}
+
+			if( parseFloat($('#equityCapitalRatio').val()) < parseFloat($('#avgEquityCapitalRatio').val())) {
+				$('#show3').show();
+			}
+
+			if( parseFloat($('#interestCoverageRatio').val()) < parseFloat($('#avgInterestCoverageRatio').val())) {
+				$('#show4').show();
+			}
+
+			if( parseFloat($('#turnoverRateAccountsReceivable').val()) < parseFloat($('#avgTurnoverRateAccountsReceivable').val())) {
+				$('#show5').show();
+			}
+
+		});
+
+		var context = document.getElementById('myChart').getContext('2d');
+
+		var myChart = new Chart(context, {
+		    type: 'bar', // 차트의 형태
+		    data: { // 차트에 들어갈 데이터
+		        labels: [
+		            //x 축
+		        	'당사','업계평균'
+		        ],
+		        datasets: [{ //데이터
+		                label: '매출액증가율', //차트 제목
+		                fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+		                data: [$('#increaseSales').val(),$('#avgIncreaseSales').val()],
+		                backgroundColor: ['rgba(54, 162, 235, 0.7)' , 'rgba(255, 99, 132, 0.7)'],
+		      }]
+		    },
+		});
+
+		var context2 = document.getElementById('myChart2').getContext('2d');
+
+		var myChart2 = new Chart(context2, {
+		    type: 'bar', // 차트의 형태
+		    data: { // 차트에 들어갈 데이터
+		        labels: [
+		            //x 축
+		        	'당사','업계평균'
+		        ],
+		        datasets: [{ //데이터
+		                label: '영업이익률', //차트 제목
+		                fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+		                data: [$('#earningsRatioSalesOperation').val(),$('#avgEarningsRatioSalesOperation').val()],
+		                backgroundColor: ['rgba(54, 162, 235, 0.7)' , 'rgba(255, 99, 132, 0.7)'],
+		      }]
+		    },
+		});
+
+		var context3 = document.getElementById('myChart3').getContext('2d');
+
+		var myChart3 = new Chart(context3, {
+		    type: 'bar', // 차트의 형태
+		    data: { // 차트에 들어갈 데이터
+		        labels: [
+		            //x 축
+		        	'당사','업계평균'
+		        ],
+		        datasets: [{ //데이터
+		                label: '자기자본비율', //차트 제목
+		                fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+		                data: [$('#equityCapitalRatio').val(),$('#avgEquityCapitalRatio').val()],
+		                backgroundColor: ['rgba(54, 162, 235, 0.7)' , 'rgba(255, 99, 132, 0.7)'],
+		      }]
+		    },
+		});
+
+		var context4 = document.getElementById('myChart4').getContext('2d');
+
+		var myChart4 = new Chart(context4, {
+		    type: 'bar', // 차트의 형태
+		    data: { // 차트에 들어갈 데이터
+		        labels: [
+		            //x 축
+		        	'당사','업계평균'
+		        ],
+		        datasets: [{ //데이터
+		                label: '이자보상비율', //차트 제목
+		                fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+		                data: [$('#interestCoverageRatio').val(),$('#avgInterestCoverageRatio').val()],
+		                backgroundColor: ['rgba(54, 162, 235, 0.7)' , 'rgba(255, 99, 132, 0.7)'],
+		      }]
+		    },
+		});
+
+		var context5 = document.getElementById('myChart5').getContext('2d');
+
+		var myChart5 = new Chart(context5, {
+		    type: 'bar', // 차트의 형태
+		    data: { // 차트에 들어갈 데이터
+		        labels: [
+		            //x 축
+		        	'당사','업계평균'
+		        ],
+		        datasets: [{ //데이터
+		                label: '매출채권회전율', //차트 제목
+		                fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+		                data: [$('#turnoverRateAccountsReceivable').val(),$('#avgTurnoverRateAccountsReceivable').val()],
+		                backgroundColor: ['rgba(54, 162, 235, 0.7)' , 'rgba(255, 99, 132, 0.7)'],
+		      }]
+		    },
+		});
+	</script>
+</html>

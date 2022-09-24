@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>기업정보수정</title>
+</head>
+<body>
+
+	<main class="form-singin">
+		
+		<form action="/insert_exe" method="post">
+
+			<h1>기업정보등록</h1>
+			<h2>1. 회사이력사항</h2>
+
+			<div>
+				<label> 1. 기업명 <input type="text" name="companyName">
+				</label>
+			</div>
+
+			<div>
+				<label> 2. 대표자 <input type="text" name="representative">
+				</label>
+			</div>
+
+			<div>
+				<label> 3. 사업자번호 <input type="text" name="businessLicenseNumber">
+				</label>
+			</div>
+
+			<div>
+				<label>4. 업종/종목 <input type="text" name="item">
+				</label>
+			</div>
+
+			<div>
+				5. 산업분류코드
+				<div>
+					<label for="N"><input type="radio" name="industrialClassificationCode" value="N">비제조업
+					</label>
+				</div>
+				<div>
+					<label for="Y"><input type="radio" name="industrialClassificationCode" value="Y">제조업
+					</label>
+				</div>
+			</div>
+
+			<div>
+				<label for="dateEstablishment">6. 설립일/법인등기일</label> 
+				<input type="date" name="dateEstablishment">
+			</div>
+
+			<div>
+				<label for="businessAddress">7. 사업자주소</label> 
+				<input type="text" name="businessAddress">
+			</div>
+
+			<div>
+				<label for="majorCommodity">8. 주요생산품 및 주요상품</label> <input
+					type="text" name="majorCommodity">
+			</div>
+
+			<div>
+				<label for="oneSOwnBusinessYn">9. 자가사업장 (유무)</label>
+				<div>
+				
+					<label for="Y"><input type="radio"
+						name="oneSOwnBusinessYn" value="Y">유</label>
+				</div>
+				<div>
+					<label for="N"><input type="radio"
+						name="oneSOwnBusinessYn" value="N">무</label>
+				</div>
+			</div>
+
+			<div>
+				<label for="Y">10. 주요매출처가 관공서 및 500억 이상 기업인 경우</label>
+				<div>
+					<label for="Y"><input type="radio"
+						name="fiftyBillionYn" value="Y">해당</label>
+				</div>
+				<div>
+					<label for="N"><input type="radio"
+						name="fiftyBillionYn" value="N">비해당</label>
+				</div>
+			</div>
+
+			<h2>2. 회사보유인증</h2>
+
+			<div>
+				<label>1. 기업부설연구소 및 전담부서</label>
+				<div>
+					<label for="Y"><input type="radio"
+						name="instituteCorporateSubsidiaryYn"
+						value="Y">유</label>
+				</div>
+				<div>
+					<label for="N"><input type="radio"
+						name="instituteCorporateSubsidiaryYn"
+						value="N">무</label>
+				</div>
+				<label for="instituteCorporateSubsidiaryYndate">갱신연월</label> <input
+					type="date" name="" id="instituteCorporateSubsidiaryYndate"
+					min="2019-06-10">
+			</div>
+
+			<div>
+				<label>2. 벤처인증</label>
+				<div>
+					<label><input type="radio" name="ventureCertificationYn"
+						value="ventureCertificationY">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="ventureCertificationYn"
+						value="ventureCertificationN">무</label>
+				</div>
+				<label for="ventureCertificationYndate">갱신연월</label> <input
+					type="date" name="" id="ventureCertificationYndate"
+					min="2019-06-10">
+			</div>
+
+			<div>
+				<label>3. 메인비즈</label>
+				<div>
+					<label><input type="radio" name="mainBizYn"
+						value="mainBizY">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="mainBizYn"
+						value="mainBizN">무</label>
+				</div>
+				<label for="mainBizYndate">갱신연월</label> <input type="date" name=""
+					id="mainBizYndate" min="">
+			</div>
+
+			<div>
+				<label>4. 이노비즈</label>
+				<div>
+					<label><input type="radio" name="inobizYn" value="inobizY">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="inobizYn" value="inobizN">무</label>
+				</div>
+				<label for="inobizYndate">갱신연월</label> <input type="date" name=""
+					id="inobizYndate" min="">
+			</div>
+
+			<div>
+				<label>5. 가족친화인증</label>
+				<div>
+					<label><input type="radio"
+						name="familyFriendlyCertificationYn"
+						value="familyFriendlyCertificationY">유</label>
+				</div>
+				<div>
+					<label><input type="radio"
+						name="familyFriendlyCertificationYn "
+						value="familyFriendlyCertificationN">무</label>
+				</div>
+				<label for="familyFriendlyCertificationYndate">갱신연월</label> <input
+					type="date" name="" id="familyFriendlyCertificationYndate" min="">
+			</div>
+
+			<div>
+				<label>6. 소재부품인증</label>
+				<div>
+					<label><input type="radio"
+						name="materialPartCertificationYn"
+						value="materialPartCertificationY">유</label>
+				</div>
+				<div>
+					<label><input type="radio"
+						name="materialPartCertificationYn"
+						value="materialPartCertificationN">무</label>
+				</div>
+				<label for="materialPartCertificationYndate">갱신연월</label> <input
+					type="date" name="date" id="materialPartCertificationYndate" min="">
+			</div>
+
+			<div>
+				<label>7. 뿌리기업인증</label>
+				<div>
+					<label><input type="radio"
+						name="rootCompanyCertificationYn"
+						value="rootCompanyCertificationY">유</label>
+				</div>
+				<div>
+					<label><input type="radio"
+						name="rootCompanyCertificationYn"
+						value="rootCompanyCertificationN">무</label>
+				</div>
+				<label for="rootCompanyCertificationYndate">갱신연월</label> <input
+					type="date" name="" id="rootCompanyCertificationYndate" min="">
+			</div>
+
+			<div>
+				<label>8. iso인증(9001/14001) </label>
+				<div>
+					<label><input type="radio" name="isoCertificationYn"
+						value="isoCertificationY">유</label>
+				</div>
+				<div>
+					<label><input type="radio" name="isoCertificationYn"
+						value="isoCertificationN">무</label>
+				</div>
+				<label for="isoCertificationYndate">갱신연월</label> <input type="date"
+					name="" id="isoCertificationYndate" min="">
+			</div>
+
+			<div>
+				<label>9. 특허 <input type="number" name="" id="patentCase"
+					min="0">건
+				</label> <br> <label>실용신안 <input type="number" name=""
+					id="utilityModelItem" min="0">건
+				</label> <br> <label>특허 최근 3년 이내 <input type="number" name=""
+					id="patentCaseThreeYears" min="0">건
+				</label> <br> <label>실용신안 최근 3년 이내 <input type="number" name=""
+					id="utilityModelItemThreeYears" min="0">건
+				</label> <br>
+			</div>
+
+			<button type="submit">Submit</button>
+			<button type="reset">Reset</button>
+
+		</form>
+
+	</main>
+</body>
+</html>
+
+
+

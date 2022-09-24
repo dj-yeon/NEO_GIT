@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hdh.dao.IUserDao">
+	<select id="getUserList" resultType="com.hdh.vo.UserVo">
+		SELECT * FROM neo_user
+	</select>
+
+	<update id="updateUser" parameterType="com.hdh.vo.UserVo">
+		UPDATE neo_user
+		   SET id = #{id},
+		       password = #{password},
+		       roll = #{roll}
+		 WHERE no = #{no}
+	</update>
+</mapper>

@@ -1,0 +1,18 @@
+package com.hdh.vo;
+
+import lombok.Data;
+
+@Data
+public class ExcelVo {
+
+	private String no;
+	private String industrialClassificationCode;
+	private String majorCommodity;
+	private String increaseSales;
+	private String earningsRatioSalesOperation;
+	private String equityCapitalRatio;
+	private String interestCoverageRatio;
+	private String turnoverRateAccountsReceivable;
+	private String manufacturing;
+
+}

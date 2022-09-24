@@ -1,0 +1,16 @@
+package com.hdh.service;
+
+import java.util.List;
+
+import com.hdh.vo.ExcelVo;
+import com.hdh.vo.FinanceVo;
+
+public interface iFinanceService {
+
+	public void insertFinance(FinanceVo Vo);
+
+	public void insertExcel(List<ExcelVo> list);
+
+	public void insertcorporateManagementAnalysis(ExcelVo Vo);
+
+}

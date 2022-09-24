@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<table border="1" width="1000px">
+		<thead>
+			<tr>
+				<th>회사명</th>
+				<th>대표자</th>
+				<th>사업자번호</th>
+				<th>업종/종목</th>
+				<th>산업분류코드</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="companyList : ${list}">
+				<td> [[${companyList.companyName}]]</td>
+				<td> [[${companyList.representative}]]</td>
+				<td> 
+					<a href=""></a>[[${companyList.businessLicenseNumber}]]
+				</td>
+				<td> [[${companyList.item}]]</td>
+				<td> [[${companyList.industrialClassificationCode}]]</td>
+
+				<td> <a th:href="@{/companymodify ( businessLicenseNumber=${companyList.businessLicenseNumber} )}">[수정]</a> </td>
+				<!-- ?industrialClassificationCode=[[${companyList.businessLicenseNumber}]] -->
+				<td> <a th:href="@{/companydelete ( businessLicenseNumber=${companyList.businessLicenseNumber} )}">[삭제]</a> </td>
+				<!-- th:href="@{/oreder/details(id=1)}" -->
+				
+			</tr>
+		</tbody>
+	</table>
+
+
+</body>
+</html>

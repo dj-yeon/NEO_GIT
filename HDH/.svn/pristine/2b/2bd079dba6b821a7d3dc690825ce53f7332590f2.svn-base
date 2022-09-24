@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<table>
+		<thead>
+			<tr>
+				<th>회사명</th>
+				<th>대표자</th>
+				<th>사업자번호</th>
+				<th>품목</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="companyList : ${list}">
+				<td> [[${companyList.companyName}]]</td>
+				<td> [[${companyList.representative}]]</td>
+				<td> [[${companyList.businessLicenseNumber}]]</td>
+				<td> [[${companyList.item}]]</td>
+				<td> [[${companyList.industrialClassificationCode}]]</td>
+
+				<td> [[${companyList.dateEstablishment}]]</td>
+				<td> [[${companyList.businessAddress}]]</td>
+				<td> [[${companyList.majorCommodity}]]</td>
+				<td> [[${companyList.oneSOwnBusinessYn}]]</td>
+				<td> [[${companyList.fiftyBillionYn}]]</td>
+				
+			</tr>
+		</tbody>
+	</table>
+
+
+</body>
+</html>

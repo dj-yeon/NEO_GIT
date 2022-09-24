@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+</head>
+<body>
+    <div style="text-align: center;">
+    <h1 style="text-align: center;">HDH Project - 유저관리</h1>
+    	<h2><a href="/admin">관리자 페이지로</a></h2>
+    </div>
+    <div>
+    	<h3>유저 목록</h3>
+    	<form id="userForm">
+   		<table border="1" width="30%" style="text-align: center;">
+   			<thead>
+   				<tr>
+   					<td>NO</td>
+   					<td>ID</td>
+   					<td>PASSWORD</td>
+   					<td>ROLL</td>
+   					<td>-</td>
+   				</tr>
+   			</thead>
+   			<tbody>
+  				<th:block th:each="list : ${List}">
+   					<tr>
+   						<td><input type="text" th:value="${list.no}" name="no" style="display: none;"><span th:text="${list.no}"></span></td>
+    					<td><input type="text" th:value="${list.id}" name="id"></td>
+    					<td><input type="text" th:value="${list.password}" name="password"></td>
+    					<td>
+	    					<select name="roll">
+	    						<option value="1" th:selected="${list.roll == '1'}">영업</option>
+	    						<option value="2" th:selected="${list.roll == '2'}">기업</option>
+	    						<option value="3" th:selected="${list.roll == '3'}">관리자</option>
+	    					</select>
+    					</td>
+    					<td><input type="checkbox"></td>
+    				</tr>
+  				</th:block>
+   			</tbody>
+   		</table>
+   		</form>
+   		<button onclick="submit();">변경하기</button>
+   		<button onclick="">삭제하기</button>
+    </div>
+
+    <script type="text/javascript">
+		function submit(){
+
+			var yn = confirm("변경하시겠습니까?");
+
+			if (yn) {
+				$.ajax({
+
+					url: "/updateUser.do",
+					data: $("#userForm").serializeArray(),
+					type: "POST",
+					success: function() {
+
+						alert('완료');
+
+						location.reload();
+					},
+					error: function() {
+						alert('에러');
+					}
+				});
+			}
+
+
+		}
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+package com.hdh.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.hdh.service.CompanyregisterService;
+import com.hdh.vo.Vo_companyregister;
+import com.hdh.vo.companyregister_vo;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@RequestMapping("/")
+@Slf4j
+public class Con_companyregister {
+	
+	@Autowired
+	CompanyregisterService companyregisterService;
+	
+	@GetMapping("/")
+	public String doFirst()	{
+		return "/index.html";
+	}
+	
+	/* 입력 */
+	@GetMapping("/insert")
+	public String doIns() {
+		return "companyRegister/companyregister";
+	}
+	
+	/* 등록하기 실행 */
+	@PostMapping("/insert_exe")
+	public String doInsExe(@ModelAttribute Vo_companyregister vo_companyregister) {
+		System.out.println(" 컨트롤러에서 받는 Vo : "+vo_companyregister);
+		int intI = companyregisterService.doCompanyIns(vo_companyregister);
+		
+		return "/index";
+	}
+	
+	/* 전체 조회 */
+	@GetMapping("/companylist")
+	public String doCompanyList(Model model) {
+		
+		List<Vo_companyregister> list = new ArrayList<>();
+		list = companyregisterService.doCompanyList2();
+		
+		model.addAttribute("list",list);
+		
+		return "companyRegister/companylist";
+	}
+	
+	/* 수정 */
+	@GetMapping("/companymodify")
+	public String doCompanyMod(HttpServletRequest request) {
+		String businessLicenseNumber = request.getParameter("businessLicenseNumber");
+		
+		companyregister_vo vo_companyregister = new companyregister_vo();
+		
+		
+		return "/companyRegister/companylist";
+				
+			
+		
+	}
+	
+	
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

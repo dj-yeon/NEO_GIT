@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hdh.dao.IDao">
+	<insert id="insertTest">
+		INSERT INTO neo_test (no) VALUE ('1')
+	</insert>
+</mapper>

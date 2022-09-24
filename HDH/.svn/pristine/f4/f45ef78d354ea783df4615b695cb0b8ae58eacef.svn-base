@@ -1,0 +1,250 @@
+package com.hdh.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.hdh.service.CompanyregisterService;
+import com.hdh.vo.ExcelVo;
+import com.hdh.vo.Vo_companyemployee;
+import com.hdh.vo.Vo_companyregister;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@RequestMapping("/")
+@Slf4j
+public class Con_companyregister {
+
+	@Autowired
+	CompanyregisterService companyregisterService;
+
+	@GetMapping("/")
+	public String doFirst() {
+		return "/index.html";
+	}
+
+	/* 회사 입력 띄우기 */
+	@GetMapping("/insert")
+	public String doIns() {
+		return "companyRegister/companyregister";
+	}
+
+	/* 회사 입력 실행 */
+	@PostMapping("/insert_exe")
+	public String doInsExe(@ModelAttribute Vo_companyregister vo_companyregister) {
+		System.out.println(" 컨트롤러에서 받는 Vo : " + vo_companyregister);
+		int intI = companyregisterService.doCompanyIns(vo_companyregister);
+
+		return "index";
+	}
+
+	/* 사원 저장 */
+	@PostMapping("/insertEmp_exe")
+	public void doInsEmpExe(List<Vo_companyemployee> list) {
+		System.out.println(" 컨트롤러에서 받는 List : " + list);
+		// int intI = companyregisterService.doComEmpIns(list);
+	}
+
+	/* 회사 목록 전체 조회 */
+	@GetMapping("/companylist")
+	public String doCompanyList(Model model) {
+
+		List<Vo_companyregister> list = new ArrayList<>();
+		list = companyregisterService.doCompanyList2();
+
+		model.addAttribute("list", list);
+
+		return "companyRegister/companylist";
+	}
+
+	/* 회사 목록 수정 띄우기 */
+	@GetMapping("/companymodify")
+	public String doMod(@RequestParam(value = "businessLicenseNumber") String businessLicenseNumber, Model model) {
+		// String strbusinessLicenseNumber =
+		// request.getParameter("businessLicenseNumber");
+		// Vo_companyregister vo_companyregister = new Vo_companyregister();
+		// vo_companyregister =
+		// companyregisterService.doCompanyListOne(businessLicenseNumber);
+		// request.setAttribute("vo_companyregister", vo_companyregister);
+
+		model.addAttribute("Vo", companyregisterService.doCompanyListOne(businessLicenseNumber));
+		System.out.println(companyregisterService.doCompanyListOne(businessLicenseNumber));
+		
+		
+		return "companyRegister/company_edit";
+		
+		
+
+	}
+
+	/* 회사 목록 수정 실행 */
+	@PostMapping("/companymodify_exe")
+	public String doModExe(@ModelAttribute Vo_companyregister vo_companyregister) {
+
+		int intI = companyregisterService.doCompanyUp(vo_companyregister);
+		
+		
+		return "redirect:companylist";
+	}
+
+	/* 회사 목록 삭제 */
+	@GetMapping("/companydelete")
+	public String doComDel(@RequestParam(value = "businessLicenseNumber") String businessLicenseNumber) {
+
+		int intI = companyregisterService.doCompanyDel(businessLicenseNumber);
+		log.info("intI => " + intI);
+		return "redirect:companylist";
+	}
+
+	/* 직원 리스트 엑셀로 업로드 */
+	@RequestMapping(value = "/employeeexcelupload.do", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Vo_companyemployee> readExcel(@RequestParam(value = "file") MultipartFile file) throws IOException {
+
+		List<Vo_companyemployee> dataList = new ArrayList<>();
+
+		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+
+		if (!extension.equals("xlsx") && !extension.equals("xls")) {
+			throw new IOException("엑셀파일만 업로드 해주세요.");
+		}
+
+		Workbook workbook = null;
+
+		if (extension.equals("xlsx")) {
+			workbook = new XSSFWorkbook(file.getInputStream());
+		} else if (extension.equals("xls")) {
+			workbook = new HSSFWorkbook(file.getInputStream());
+		}
+
+		Sheet worksheet = workbook.getSheetAt(0);
+
+		// 최상단 공백이 있을때 : + 1
+		int cnt = worksheet.getPhysicalNumberOfRows();
+
+		for (int i = 1; i < cnt; i++) {
+
+			Row row = worksheet.getRow(i);
+
+			Vo_companyemployee vo_companyemployee = new Vo_companyemployee();
+			DataFormatter formatter = new DataFormatter();
+
+			String name_kor = formatter.formatCellValue(row.getCell(1));
+			String edu = formatter.formatCellValue(row.getCell(2));
+			String science_study = formatter.formatCellValue(row.getCell(3));
+			String birthdate = formatter.formatCellValue(row.getCell(4));
+			String experience = formatter.formatCellValue(row.getCell(5));
+			String businessLicenseNumber = formatter.formatCellValue(row.getCell(6));
+
+			vo_companyemployee.setName_kor(name_kor);
+			vo_companyemployee.setEdu(edu);
+			vo_companyemployee.setScience_study(science_study);
+			vo_companyemployee.setBirthdate(birthdate);
+			vo_companyemployee.setExperience(experience);
+			vo_companyemployee.setBusinessLicenseNumber(businessLicenseNumber);
+
+			if (name_kor != "" && edu != "" && science_study != "" && birthdate != "" && experience != ""
+					&& businessLicenseNumber != "") {
+				dataList.add(vo_companyemployee);
+				System.err.println(vo_companyemployee);
+
+				// DAO호출 = MAPPER호출 = DB에 INSERT
+				companyregisterService.insertEmployeeList(vo_companyemployee);
+			}
+
+		}
+
+		return dataList;
+	}
+
+	// 직원 리스트 출력
+	@GetMapping("/employeelist")
+	@ResponseBody
+	public String doEmployee_reg(HttpServletRequest request, Model model) {
+
+		List<Vo_companyemployee> employeelist = new ArrayList<>();
+
+		employeelist = companyregisterService.doEmployeeList();
+		System.out.println("LIST :::::::" + companyregisterService.doEmployeeList());
+
+		request.setAttribute("employeelist", employeelist);
+
+		return "companyRegister/companyregister";
+	}
+	
+	
+	@RequestMapping("/code.do")
+	@ResponseBody
+	public List<ExcelVo> codedo (String data) {
+		
+		
+		
+		// 산업분류명, 산업분류코드 가져오기
+		if(data.equals("C")) {
+			
+			//System.out.println(companyregisterService.getC());
+			return companyregisterService.getC(); 
+		} 
+		
+		if(data.equals("NOC")) {
+			
+			//System.out.println(companyregisterService.getNoC());
+			return companyregisterService.getNoC(); 
+		}
+		
+		System.out.println(data);
+		
+		return null;
+	}
+	
+	@RequestMapping("/code2.do")
+	@ResponseBody
+	public List<ExcelVo> codedo2 (String data) {
+		
+		
+		
+		// 산업분류명, 산업분류코드 가져오기
+		if(data.equals("C")) {
+			
+			//System.out.println(companyregisterService.getC());
+			return companyregisterService.getC(); 
+		} 
+		
+		if(data.equals("NOC")) {
+			
+			//System.out.println(companyregisterService.getNoC());
+			return companyregisterService.getNoC(); 
+		}
+		
+		System.out.println(data);
+		
+		return null;
+	}
+	
+ }

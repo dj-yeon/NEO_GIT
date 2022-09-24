@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+</head>
+<body>
+    <div style="text-align: center;">
+    <h1 style="text-align: center;">HDH Project</h1>
+    	<h2>LOGIN</h2>
+    	<form id="loginForm">
+	    	<input type="text" placeholder="ID" name="id" id="id">
+	    	<br>
+	    	<input type="password" placeholder="PASSWORD" name="password" id="password">
+	    	<br>
+	    	<button type="button" onclick="login();">로그인</button><br>
+	    	<button type="button" onclick="location.href = '/signup'">회원가입</button>
+    	</form>
+    </div>
+
+    <script type="text/javascript">
+
+    $("#password").on("keyup", function(key){
+		if(key.keyCode == 13){
+			login();
+		}
+	});
+
+		function login() {
+
+			if($('#id').val() == "" || $('#id').val() == null || $('#id').val() == "undefined" ) {
+				alert('아이디를 입력해주세요');
+
+				return false;
+			}
+
+			if($('#password').val() == "" || $('#password').val() == null || $('#password').val() == "undefined" ) {
+				alert('비밀번호를 입력해주세요');
+
+				return false;
+			}
+
+			$.ajax({
+
+				url: "/login.do",
+				data: $("#loginForm").serialize(),
+				type: "POST",
+				success: function(data) {
+
+					if(data) {
+
+						alert('로그인 완료');
+
+						location.href="/main";
+
+					} else {
+
+						alert('아이디나 비밀번호가 틀립니다.');
+
+					}
+
+				},
+				error: function() {
+					alert('에러');
+				}
+			});
+		}
+    </script>
+</body>
+</html>

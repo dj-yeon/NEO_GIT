@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+</head>
+<body>
+<h1>재무상태표</h1>
+
+	<form id="FinanceForm">
+		<input type="text" name="id" th:value="${session.id}"><br>
+
+		<span>회사선택</span>
+		<select name="businessLicenseNumber">
+			<th:block th:each="list : ${companyList}">
+				<option th:value="${list.businessLicenseNumber}" th:text="${list.companyName}"></option>
+			</th:block>
+		</select>
+		<br>
+		<span>년도선택</span>
+		<select name="date">
+			<option value="2022" selected="selected">2022</option>
+			<option value="2021">2021</option>
+			<option value="2020">2020</option>
+			<option value="2019">2019</option>
+			<option value="2018">2018</option>
+			<option value="2017">2017</option>
+		</select>
+		<h2>자산</h2>
+		    <input type="text" placeholder="유동자산" name="liquidAssets" >
+		    <input type="text" placeholder="당좌자산" name="partyProperty" >
+		    <input type="text" placeholder="현금및현금성자산" name="cashCashableAssets" >
+		    <input type="text" placeholder="기타현금및 예금" name="otherCashDeposits" >
+		    <input type="text" placeholder="단기예금(단기금융상품)" name="shortTermDeposit" >
+		    <input type="text" placeholder="매출채권" name="tradeBond" >
+		    <input type="text" placeholder="재고자산" name="stockAssets" >
+		    <input type="text" placeholder="비유동자산" name="nonCurrentAssets" >
+		    <input type="text" placeholder="유형자산" name="tangibleAssets" >
+		    <input type="text" placeholder="기계장치" name="machineEquipment" >
+		    <input type="text" placeholder="무형자산" name="intangibleProperty" >
+		    <input type="text" placeholder="개발비" name="developmentCost" >
+		<h2>부채</h2>
+			<input type="text" placeholder="유동부채" name="currentLiabilities" >
+			<input type="text" placeholder="단기차입금" name="shortTermBorrowings" >
+			<input type="text" placeholder="매입채무" name="purchaseDebt" >
+			<input type="text" placeholder="비유동부채" name="nonCurrentLiability" >
+			<input type="text" placeholder="장기차입금" name="longTermLoans" >
+
+		<h2>자기자본</h2>
+			<input type="text" placeholder="자본금" name="capital" >
+			<input type="text" placeholder="미처분이익잉여금" name="retainedEarningsArrears" >
+
+		<h2>손익계산서</h2>
+			<input type="text" placeholder="제품매출액" name="productSales" >
+			<input type="text" placeholder="상품매출액" name="wareSales" >
+			<input type="text" placeholder="그외매출액(용역및기타서비스)" name="otherSales" >
+			<input type="text" placeholder="매출원가" name="salesCost" >
+			<input type="text" placeholder="판매비와관리비" name="salesAdministrativeExpenses" >
+			<input type="text" placeholder="연구개발비/경상개발비" name="rDExpenses" >
+			<input type="text" placeholder="영업외비용" name="nonOperatingExpenses" >
+			<input type="text" placeholder="이자비용" name="interestExpense" >
+			<input type="text" placeholder="세전순이익" name="netIncomeBeforeTax" >
+			<input type="text" placeholder="법인세비용" name="corporateTaxExpense" >
+
+		<h2>제조원가명세서</h2>
+			<input type="text" placeholder="연구개발비/경상개발비" name="manufacturingCostRDExpenses" >
+	</form>
+
+    <button type="button" onclick="insertFinance();">등록하기</button>
+
+    <div style="margin-top: 100px;">
+	    <form id="excelForm" action="post">
+		    <input type="file" name="file" id="excelFile">
+			<button type="button" onclick="excelSubmit();">업로드 하기</button>
+	    </form>
+    </div>
+
+    <script type="text/javascript">
+
+		/*
+		콤마찍기 function ( onkeyup="inputNumberFormat(this); )"
+
+		function inputNumberFormat(obj) {
+		obj.value = comma(uncomma(obj.value));
+		}
+
+		function comma(str) {
+		    str = String(str);
+		    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+		}
+
+		function uncomma(str) {
+		    str = String(str);
+		    return str.replace(/[^\d]+/g, '');
+		}
+
+		*/
+
+		function insertFinance (){
+
+			var yn = confirm("등록하시겠습니까?");
+
+			if (yn) {
+
+				$.ajax({
+
+					url: "/insertFinance.do",
+					data: $("#FinanceForm").serialize(),
+					type: "POST",
+					success: function() {
+
+						alert('등록완료.');
+
+						location.reload();
+					},
+					error: function() {
+						alert('공백 또는 에러가 있습니다.');
+					}
+				});
+			}
+		}
+
+		function excelSubmit (){
+
+			if(document.getElementById("excelFile").value==''){
+				alert('엑셀 파일을 첨부해주세요');
+				return false
+			}
+
+			var form = $('#excelForm')[0];
+			var data = new FormData(form);
+
+			var yn = confirm('엑셀 업로드 하시겠습니까?');
+
+			if(yn) {
+
+				$.ajax({
+					url: "/excelupload.do",
+					data: data,
+					type: "POST",
+					processData: false,
+					contentType: false,
+					success: function() {
+						alert('엑셀 업로드 성공');
+
+						location.reload();
+					},
+					error : function(){
+						alert('엑셀 업로드 실패');
+					}
+				});
+
+			}
+
+		}
+    </script>
+</body>
+</html>

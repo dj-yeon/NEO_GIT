@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script
+	src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+@charset "UTF-8";
+</style>
+
+
+
+
+<title>사원정보등록</title>
+</head>
+<body>
+	<form action="" method="post">
+		<input type="text" name="id" placeholder="ID" th:value="${session.id}">
+
+		<h1>자가진단</h1>
+		<h2>기본조건( 국세, 지방세, 4대보험료 체납이 없어야 함)</h2>
+		
+		<br>
+		
+<h3>기업부설연구소/ 전담부서</h3>
+		
+		<div>
+			<label> 1.독립된 공간 혹은 파티션으로 분리가능하십니까? </label>
+				<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>			
+			
+		</div>
+		
+		<div>
+			<label> 2.전담연구원이 있습니까? </label>
+				<br>
+				<label>DB저장 내용</label><br>
+				<input type="text" name="" style="width:300px;height:200px;font-size:30px;">
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>
+				<br>
+				
+		<label>→ 위의 조건이 수렴시 연구소 설립 가능</label><br><br>
+		<label>결과 : </label>
+		<input type="text" name="" value="연구소 설립 가능">
+				
+		</div>
+		
+<h3>벤처인증</h3>
+		
+		<div>
+			<label> 1.연구소 혹은 전담부서가 있습니까? </label>
+				<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">		
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>	
+				
+		</div>
+		
+		<div>
+			<label> 2.최근3년내 특허를 보N하고 계십니까? 혹은 특허를 보유할계획이십니까?  </label>
+				<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>				
+		</div>
+		
+		<div>
+			<label> 3.부채비율이 250% 이하입니까?  </label>
+				<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>				
+		</div>		
+		
+		<label>→ 위의 조건이 수렴시 벤처인증 취득가능</label><br><br>
+		<label>결과 : </label>
+		<input type="text" name="" value="벤처인증취득가능">
+		
+		
+		
+<h3>이노비즈인증</h3>
+		
+		<div>
+			<label> 1.연구소 혹은 전담부서가 있습니까? </label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">		
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>	
+				
+		</div>
+		
+		<div>
+			<label> 2.벤처인증을 보유하고 계십니까?  </label>
+				<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">	
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>
+				
+				
+				<br>
+		</div>
+		
+		<div>
+			<label> 3.최근3년내 특허를 보유하고 계십니까? 혹은 특허를 보유할계획이십니까? </label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">		
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>			
+				
+		</div>
+		
+		<div>
+			<label> 4.부채비율이 250% 이하입니까?   </label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">		
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>
+				<br>
+		</div>
+		
+		<div>
+			<label> 4.회사 설립연수가 3년 이상입니까? </label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">	
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>		
+		</div>
+		
+		<label>→ 위의 조건이 수렴시 이노비즈 인증 취득가능</label><br><br>
+		<label>결과 : </label>
+		<input type="text" name="" value="이노비즈 인증취득가능">
+		
+		
+<h3>메인비즈인증</h3>
+		
+		<div>
+			<label>1.직전3개년 매출이 증가 했거나 산업평균보다 성장성,수익성,이 같거나 높습니까? </label>
+				<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">	
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>		
+				
+				
+		</div>
+		
+		<div>
+			<label>2.향후 매출증가 및 인력충원을 대표자가 계획중입니까 ?</label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>
+				
+				<br>
+		</div>
+		
+		<div>
+			<label> 3.부채비율이 200% 이하입니까? </label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">	
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>		
+		</div>
+		
+		<div>
+			<label> 4.회사 설립연수가 3년 이상입니까? </label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">	
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>		
+		</div>
+		
+		<label>→ 위의 조건이 수렴시 메인비즈인증 취득가능</label><br><br>
+		<label>결과 : </label>
+		<input type="text" name="" value="메인비즈인증 취득가능">
+
+
+<h3>가족친화인증</h3>
+		
+		<div>
+			<label> 1. 직전재무제표가 있습니까? </label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">	
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>		
+				
+		</div>
+		
+		<div>
+			<label> 2. 직전상시근로자가 5인이상입니까?</label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>
+				
+				<br>
+		</div>
+		
+		<div>
+			<label> 3. 직전상시근로자가 5인이하이나 근로자중 출산휴가등 휴가제도를 이용하였습니까? </label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>			
+				
+		</div>
+		
+		<label>→ 위의 조건중 2가지 이상 수렴시 인증취득가능</label><br><br>
+		<label>결과 : </label>
+		<input type="text" name="" value="가족친화인증 취득가능">
+
+<h3>소재부품 인증 </h3>
+		
+		<div>
+			<label> 1.산업분류코드가 소재부품 코드이거나 혹은 반제품을 제작하는 업체입니까? </label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">		
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>		
+				
+		</div>
+		
+		<div>
+			<label> 2.직전재무제표가 있습니까? </label>
+				<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">		
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>
+			
+				<br>
+		</div>
+		
+		<div>
+			<label> 3.직전손익계산서상 제품매출이 전체매출의 50%이상입니까? </label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">	
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>		
+						
+		</div>
+		
+		<label>→ 위의조건이 수렴시 소재부품인증취득가능</label><br><br>
+		<label>결과 : </label>
+		<input type="text" name="" value="소재부품인증 취득가능">
+				
+		
+<h3>뿌리기업인증</h3>
+		
+		<div>
+			<label> 1.산업분류코드가 뿌리기업코드이거나 혹은 판금, 열처리, 주조, 용접, 소성등 후방지원사업을 하고 계십니까? </label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">		
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>			
+				
+		</div>
+		
+		<div>
+			<label> 2.직전재무제표가 있습니까?   </label>
+				<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">		
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>
+			
+				<br>
+		</div>
+		
+		<div>
+			<label> 3.직전손인계산서상 제품매출이 전체매출의 50%이상입니까? </label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">			
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>		
+				
+		</div>
+		
+		<label>→ 위의조건이 수렴시 뿌리기업인증취득가능</label><br><br>
+		<label>결과 : </label>
+		<input type="text" name="" value="뿌리기업인증 취득가능">
+
+
+		
+<h3>ISO9001 인증</h3>
+		
+		<div>
+			<label>1.상시근로자가 2인이상입니까? </label>
+			<br>
+				<label>DB저장 내용 : </label><input type="text" name="" value="YES">		
+				<br>
+				<label><input type="radio" name="" value="Y">Y</label>
+				<label><input type="radio" name="" value="N">N</label>		
+					
+		</div>
+		
+		<label>→ 위의조건이 수렴시 ISO9001취득가능</label><br><br>
+		<label>결과 : </label>
+		<input type="text" name="" value="ISO9001 취득가능">
+		
+		
+		<br><br>
+
+		<button type="submit">저장</button>
+		<button type="reset">초기화</button>
+
+	</form>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+		<table border="1">
+			<thead>
+				<tr>
+					<th>소속회사</th>
+					<th>성명</th>
+					<th>최종학력</th>
+					<th>자연계/이공계</th>
+					<th>생년월일</th>
+					<th>경력사항</th>
+					<th>사업자번호</th>
+					<th>수정</th>
+					<th>삭제</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="vo_companyemployee : ${list}">
+					<td>소속회사</td>
+					<td>[[${vo_companyemployee.nameKor}]]</td>
+					<td>[[${vo_companyemployee.edu}]]</td>
+					<td>[[${vo_companyemployee.scienceStudy}]]</td>
+					<td>[[${vo_companyemployee.birthdate}]]</td>
+					<td>[[${vo_companyemployee.experience}]]</td>
+					<td>미정</td>
+ 					<td>
+ 						<a th:href="@{/empmodify ( vo_companyemployee=${vo_companyemployee} )}">[수정]</a>
+					</td>
+					<td>
+						<a th:href="@{/companydelete ( vo_companyemployee=${vo_companyemployee} )}">[삭제]</a>
+					</td>
+
+			</tbody>
+			<tr>
+		</table>
+
+</body>
+
+
+</html>

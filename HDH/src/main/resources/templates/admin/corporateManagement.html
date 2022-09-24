@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+	<style type="text/css">
+		td {font-weight: bold; font-size: 15px;}
+	</style>
+</head>
+<body>
+    <div style="text-align: center;">
+    <h1 style="text-align: center;">HDH Project - 기업경영분석(엑셀 업로드)</h1>
+    	<h2><a href="/admin">관리자 페이지로</a></h2>
+    </div>
+    <div>
+    	<h3>기업경영분석(엑셀 업로드)</h3>
+    	<div>
+		    <form id="excelForm" action="post">
+			    <input type="file" name="file" id="excelFile">
+				<button type="button" onclick="excelSubmit();">업로드 하기</button>
+		    </form>
+	    </div>
+    	<form id="dataForm">
+	   		<table border="1" style="text-align: center;">
+	   			<thead>
+	   				<tr>
+	   					<td style="display: none;">no</td>
+	   					<td>산업분류코드</td>
+	   					<td>주요제품및 상품</td>
+	   					<td>매출액증가율(성장성)</td>
+	   					<td>영업이익률(수익성)</td>
+	   					<td>자기자본비율(안정성)</td>
+	   					<td>이자보상비율(안정성)</td>
+	   					<td>매출채권회전율(활동성)</td>
+	   				</tr>
+	   			</thead>
+	   			<tbody id="target">
+	   				<th:block th:each="list : ${List}">
+		 				<tr>
+		 					<td style="display: none;"><input type="text" name="no" th:value="${list.no}"></td>
+		  					<td><input type="text" name="industrialClassificationCode" th:value="${list.industrialClassificationCode}"></td>
+		   					<td><input type="text" name="majorCommodity" th:value="${list.majorCommodity}"></td>
+		   					<td><input type="text" name="increaseSales" th:value="${list.increaseSales}"></td>
+		   					<td><input type="text" name="earningsRatioSalesOperation" th:value="${list.earningsRatioSalesOperation}"></td>
+		   					<td><input type="text" name="equityCapitalRatio" th:value="${list.equityCapitalRatio}"></td>
+		   					<td><input type="text" name="interestCoverageRatio" th:value="${list.interestCoverageRatio}"></td>
+		   					<td><input type="text" name="turnoverRateAccountsReceivable" th:value="${list.turnoverRateAccountsReceivable}"></td>
+		   				</tr>
+	   				</th:block>
+	   			</tbody>
+	   		</table>
+   		</form>
+   		<button onclick="submit();">저장하기</button>
+   		<button onclick="updateSubmit();">수정하기</button>
+   		<button onclick="deleteSubmit();">삭제하기</button>
+    </div>
+
+    <script type="text/javascript">
+		function submit(){
+
+			var yn = confirm("저장하시겠습니까?");
+
+			if (yn) {
+				$.ajax({
+
+					url: "/insertCM.do",
+					data: $("#dataForm").serializeArray(),
+					type: "POST",
+					success: function() {
+
+						alert('완료');
+
+						location.reload();
+					},
+					error: function() {
+						alert('에러');
+					}
+				});
+			}
+		}
+
+		function updateSubmit(){
+
+			var yn = confirm("수정하시겠습니까?");
+
+			if (yn) {
+				$.ajax({
+
+					url: "/updateCM.do",
+					data: $("#dataForm").serializeArray(),
+					type: "POST",
+					success: function() {
+
+						alert('완료');
+
+						location.reload();
+					},
+					error: function() {
+						alert('에러');
+					}
+				});
+			}
+		}
+
+		function deleteSubmit(){
+
+			var yn = confirm("삭제하시겠습니까?");
+
+			if (yn) {
+				$.ajax({
+					url: "/deleteCM.do",
+					type: "POST",
+					success: function() {
+
+						alert('완료');
+
+						location.reload();
+					},
+					error: function() {
+						alert('에러');
+					}
+				});
+			}
+		}
+
+		function excelSubmit (){
+
+			if(document.getElementById("excelFile").value==''){
+				alert('엑셀 파일을 첨부해주세요');
+				return false
+			}
+
+			var form = $('#excelForm')[0];
+			var data = new FormData(form);
+
+			var yn = confirm('엑셀 업로드 하시겠습니까?');
+
+			if(yn) {
+
+				$.ajax({
+					url: "/CMexcelupload.do",
+					data: data,
+					type: "POST",
+					processData: false,
+					contentType: false,
+					success: function(dataList) {
+
+						for(var i = 0; i < dataList.length; i++) {
+							$('#target').append('<tr><td><input type="text" value="'+dataList[i].industrialClassificationCode+'" name="industrialClassificationCode"></td><td><input type="text" value="'+dataList[i].majorCommodity+'" name="majorCommodity"></td><td><input type="text" value="'+dataList[i].increaseSales+'" name="increaseSales"></td><td><input type="text" value="'+dataList[i].earningsRatioSalesOperation+'" name="earningsRatioSalesOperation"></td><td><input type="text" value="'+dataList[i].equityCapitalRatio+'" name="equityCapitalRatio"></td><td><input type="text" value="'+dataList[i].interestCoverageRatio+'" name="interestCoverageRatio"></td><td><input type="text" value="'+dataList[i].turnoverRateAccountsReceivable+'" name="turnoverRateAccountsReceivable"></td></tr>');
+						}
+
+					},
+					error : function(){
+						alert('엑셀 업로드 실패');
+					}
+				});
+
+			}
+
+		}
+    </script>
+</body>
+</html>
